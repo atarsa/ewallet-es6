@@ -1,0 +1,108 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <!-- Materialize-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <!-- icons -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+    integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+
+  <title>Multi-currency eWallet</title>
+</head>
+
+<body>
+  <nav>
+    <div class="nav-wrapper blue-grey">
+      <div class="container">
+        <a href="#" class="brand-logo center"> eWallet</a>
+        <ul class="right">
+          <li>
+            <a href="#" class="clear-btn btn blue-grey lighten-3">Clear All</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <br>
+  <div class="container">
+    <div class="card">
+      <div class="card-content">
+
+        <div class="row">
+          <h5 class="card-title col s6">Your Base Currency:</h5>
+
+          <input type="text" class="input-field col s6" placeholder="Choose base currency">
+
+        </div>
+
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-content">
+
+        <span class="card-title">Add Money To Wallet</span>
+        <form class="col">
+          <div class="row">
+
+            <div class="input-field col s6">
+              <input type="text" id="item-currency" placeholder="Add Currency">
+              <label for="item-currency" class="active">Currency</label>
+            </div>
+            <div class="input-field col s6">
+              <input type="number" id="item-amount" placeholder="Add Amount">
+              <label for="item-amount" class="active">Amount</label>
+            </div>
+          </div>
+          <button class="add-btn btn blue darken-3"><i class="fas fa-plus"></i> Add Money</button>
+          <!-- <button class="update-btn btn orange "><i class="fas fa-edit"></i> Update Money</button>
+          <button class="delete-btn btn red"><i class="fas fa-times"></i> Delete Money</button>
+
+          <button class="back-btn btn grey"><i class="fas fa-chevron-circle-left"></i>
+            Back</button> -->
+
+        </form>
+      </div> <!-- end of .card-content -->
+    </div> <!-- end of .card -->
+    <!-- Items list -->
+    <h4 class="right-align">Total:
+      <span class="total-money">25</span>
+      <span class="currency">GBP</span>
+    </h4>
+    <ul id="items-list" class="collection">
+      <li class="collection-item" data-id="1">
+        <a href="#" class="">
+          <i class="edit-item fas fa-edit"></i>
+        </a>
+        <strong>10 USD </strong>
+
+        <span class="secondary-content">
+          <span class="converted-amount">12</span>
+          <span class="currency">GBP </span>
+        </span>
+      </li>
+      <li class="collection-item" data-id="2">
+        <a href="#" class="">
+          <i class="edit-item fas fa-edit"></i>
+        </a>
+        <strong>10 USD </strong>
+
+        <span class="secondary-content">
+          <span class="converted-amount">13</span>
+          <span class="currency">GBP </span>
+        </span>
+      </li>
+    </ul>
+
+
+  </div> <!-- end of .container -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+
+</html>
