@@ -18,8 +18,10 @@ export default {
     },
     plugins: [
         new HtmlWebpackPlugin({
+            inject: false, 
             title: 'Custom template',
             template: path.join(__dirname, 'src/index.html')
+           
         }),
         new ScriptExtHtmlWebpackPlugin({
             defaultAttribute: 'defer'
