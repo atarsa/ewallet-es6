@@ -72,6 +72,13 @@ export const ItemCtrl =  (function(){
       return newItem;
     },
 
+    getAvaliableCurrencies: function(){
+      return currenciesList;
+
+    },
+
+    
+
     dataLog: function(){
       console.log(data)
     }
