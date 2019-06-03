@@ -6,6 +6,7 @@ export const UICtrl= (function(){
     itemCurrencyInput: '#item-currency',
     itemAmountInput: '#item-amount',
     itemList: '#items-list',
+    listItems: '#items-list li',
     currencyList: '#currency-list',
     addBtn: '.add-btn'
   }
@@ -33,7 +34,7 @@ export const UICtrl= (function(){
       const li = document.createElement('li');
       // Add class and id
       li.className = 'collection-item';
-      li.id = `item-${item.id}`;
+      li.id=  `item-${item.id}`;
 
       // Add html
       li.innerHTML = `
@@ -53,6 +54,21 @@ export const UICtrl= (function(){
       // Insert item
       document.querySelector(UISelectors.itemList).insertAdjacentElement('beforeend', li);
 
+    },
+    updateListItem: function(item){
+      document.getElementById(`item-${item.id}`).innerHTML = `
+      <a href="#" class="">
+        <i class="edit-item fas fa-edit"></i>
+      </a>
+      <strong>
+        <span class="amount">${item.amount}</span>
+        <span class="currency">${item.currency}</span>
+      </strong>
+
+      <span class="secondary-content">
+        <span class="converted-amount">12</span>
+        <span class="base-currency">GBP </span>
+      </span>`;
     },
 
     // Show available currencies list

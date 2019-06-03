@@ -4,10 +4,13 @@ import {UICtrl} from './ui';
 
 const App = (function(ItemCtrl, UICtrl){
 
+  // Get UI Selectors
+  const UISelectors = UICtrl.getSelectors();
+
   // Load event listeners
   const loadEventListeners = function(){
     // Get UI Selectors
-    const UISelectors = UICtrl.getSelectors();
+    //const UISelectors = UICtrl.getSelectors();
 
     // Add item event 
     document.querySelector(UISelectors.addBtn).addEventListener('click', itemAddSubmit);
@@ -30,24 +33,64 @@ const App = (function(ItemCtrl, UICtrl){
       if (input.amount < 0){
         // TODO: show alert with msg
         
-      } else {
-        // check if input.currency already in list -> if yes update it instead of creating new item
-        const newItem = ItemCtrl.addItem(input.currency.split(" ")[0], input.amount);
+      } else   {
+        // get currency abbreviation
+        input.currency = input.currency.split(" ")[0]; 
 
-        // Add item to UI list
-        // !or update existing one
-        UICtrl.addListItem(newItem);
+        // check if input.currency already in list -> if yes update it instead of creating new item
+        const dataItems = ItemCtrl.getDataItems();
+        console.log(dataItems);
+
+        // list clear, add item to the list
+        if (dataItems.length === 0){
+          let newItem = ItemCtrl.addItem(input.currency, input.amount);
+          UICtrl.addListItem(newItem);
+        } else {
+          // check if currency already in the list
+          let found =  dataItems.find(function(element) {
+
+            return element.currency === input.currency;
+          })
+          console.log(found)
+
+          if (found){
+            // TODO: Update found
+            found.amount += Number.parseInt(input.amount);
+            UICtrl.updateListItem(found);
+          //   document.getElementById(`item-${found.id}`).innerHTML = `
+          //   <a href="#" class="">
+          //   <i class="edit-item fas fa-edit"></i>
+          // </a>
+          // <strong>
+          //   <span class="amount">${found.amount}</span>
+          //   <span class="currency">${found.currency}</span>
+          // </strong>
+  
+          // <span class="secondary-content">
+          //   <span class="converted-amount">12</span>
+          //   <span class="base-currency">GBP </span>
+          // </span>
+            // `;
+            
+          } else {
+            // add new item
+            let newItem = ItemCtrl.addItem(input.currency, input.amount);
+              UICtrl.addListItem(newItem);
+          }
+            
+        }
+
         // Clear input
         UICtrl.clearInput();
+      
       }
-     
     } else{
       // TODO: show message that no input
       console.log("No input");
     }
     
     
-       ItemCtrl.dataLog();
+    ItemCtrl.dataLog();
     e.preventDefault();
   }
 

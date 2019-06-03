@@ -77,7 +77,9 @@ export const ItemCtrl =  (function(){
 
     },
 
-    
+    getDataItems: function(){
+      return data.items;
+    },
 
     dataLog: function(){
       console.log(data)
