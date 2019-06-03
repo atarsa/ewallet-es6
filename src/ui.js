@@ -4,10 +4,14 @@ import { ItemCtrl } from "./item";
 export const UICtrl= (function(){
   const UISelectors = {
     itemCurrencyInput: '#item-currency',
+    baseCurrencyInput: '#base-currency',
+    currencyInput: '.currency-input',
     itemAmountInput: '#item-amount',
     itemList: '#items-list',
     listItems: '#items-list li',
-    currencyList: '#currency-list',
+    currencyListItem: '.currency-list.item',
+    currencyListBase: '.currency-list.base',
+    currencyList: '.currency-list',
     addBtn: '.add-btn'
   }
   
@@ -72,16 +76,30 @@ export const UICtrl= (function(){
     },
 
     // Show available currencies list
-    showCurrencyList: function(){
+    showCurrencyList: function(e){
       
       const availableCurrency = ItemCtrl.getAvaliableCurrencies();
+      let currencyList;
+      let currencyInput;
+
+      // Check which list 
+      if (e.target.matches('.base')){
+        // Get base currency list
+        currencyList = document.querySelector(UISelectors.currencyListBase);
+        // Get base currency user input
+        currencyInput = document.querySelector(UISelectors.baseCurrencyInput).value;
+
+      } else {
+        // Get item currency list
+        currencyList = document.querySelector(UISelectors.currencyListItem);
+        // Get item currency user input
+        currencyInput = document.querySelector(UISelectors.itemCurrencyInput).value;
+
+      }
             
-      const currencyList = document.querySelector(UISelectors.currencyList);
-      
       // clear list on each key down
       currencyList.innerHTML = '';
-      // get user input
-      const currencyInput = document.querySelector(UISelectors.itemCurrencyInput).value;
+      
 
       let ulHtml = '';
 
@@ -93,19 +111,27 @@ export const UICtrl= (function(){
         }
       }
       currencyList.innerHTML = ulHtml;
+
       
     },
 
-    getCurrencyInput: function(e){
+    getCurrencyInput: function(e, list){
+      //console.log(e.target)
+      let input;
+      if (list.parentElement.matches('base')){
+        input = UISelectors.itemCurrencyBase
+      } else {
+        input = UISelectors.itemCurrencyInput;
+      }
       
       if(e.target.matches('.small')){
-        document.querySelector(UISelectors.itemCurrencyInput).value = e.target.parentElement.innerText;
+        document.querySelector(input).value = e.target.parentElement.innerText;
        
       } else {
-        document.querySelector(UISelectors.itemCurrencyInput).value = e.target.innerText;      
+        document.querySelector(input).value = e.target.innerText;      
       }
       // clear currency list
-      document.querySelector(UISelectors.currencyList).innerHTML = '';
+      list.innerHTML = '';
     },
 
     

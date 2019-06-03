@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
     integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 
+
   <title>Multi-currency eWallet</title>
 </head>
 
@@ -36,7 +37,10 @@
         <div class="row">
           <h5 class="card-title col s6">Your Base Currency:</h5>
 
-          <input type="text" class="input-field col s6" placeholder="Choose base currency">
+          <input type="text" id="base-currency" class="input-field col s6 currency-input base"
+            placeholder="Choose base currency">
+
+          <ul class="currency-list base collection col s6"></ul>
 
         </div>
 
@@ -51,10 +55,10 @@
           <div class="row">
 
             <div class="input-field col s6">
-              <input type="text" id="item-currency" placeholder="Choose Currency">
+              <input type="text" id="item-currency" class="currency-input item" placeholder="Choose Currency">
               <label for="item-currency" class="active">Currency</label>
 
-              <ul id="currency-list" class="collection"></ul>
+              <ul class="currency-list item collection"></ul>
 
             </div>
             <div class="input-field col s6">
@@ -74,8 +78,8 @@
     </div> <!-- end of .card -->
     <!-- Items list -->
     <h4 class="right-align">Total:
-      <span class="total-money">25</span>
-      <span class="currency">GBP</span>
+      <!-- <span class="total-money">25</span>
+      <span class="base-currency">GBP</span> -->
     </h4>
     <ul id="items-list" class="collection">
       <!-- <li class="collection-item" data-id="1">

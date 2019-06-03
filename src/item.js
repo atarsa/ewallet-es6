@@ -9,7 +9,8 @@ export const ItemCtrl =  (function(){
   // Data Strucuture
   const data = {
     items : [],
-    currentItem: null
+    currentItem: null,
+    baseCurrency: null
   }
 
   // Available currencies
@@ -70,6 +71,11 @@ export const ItemCtrl =  (function(){
       // Add to items array
       data.items.push(newItem);
       return newItem;
+    },
+    
+    // Set base currency
+    setBaseCurrency: function(currency){
+      data.baseCurrency = currency;
     },
 
     getAvaliableCurrencies: function(){
