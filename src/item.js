@@ -1,3 +1,5 @@
+import { UICtrl } from "./ui";
+
 export const ItemCtrl =  (function(){
   // Item constructor
   const Item  = function(id, currency, amount){
@@ -8,14 +10,20 @@ export const ItemCtrl =  (function(){
 
   // Data Strucuture
   const data = {
-    items : [],
+    items : [{ id: 0, currency: "PLN", amount: 100 },
+    { id: 1, currency: "GBP", amount: 100 }
+      ],
     currentItem: null,
-    baseCurrency: null
+    // init with GBP as defualt
+    // TODO: get base currency from local storage on load
+    baseCurrency: "GBP",
+    exchangeRates: {}
   }
 
   // Available currencies
   /* list compatible with https://exchangeratesapi.io/ and foreign exchange rates published by the European Central Bank https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html */
-  const currenciesList = {'USD': 'US dollar',
+  const currenciesList = {'EUR': 'Euro',
+                          'USD': 'US dollar',
                           'JPY': 'Japanese yen',
                           'BGN': 'Bulgarian lev',
                           'CZK': 'Czech koruna',
@@ -49,6 +57,8 @@ export const ItemCtrl =  (function(){
                           'ZAR': 	'South African rand'
  }; 
 
+
+ 
   // Public methods
   return {
 
@@ -72,17 +82,71 @@ export const ItemCtrl =  (function(){
       data.items.push(newItem);
       return newItem;
     },
-    
+
     // Set base currency
     setBaseCurrency: function(currency){
       data.baseCurrency = currency;
+      // update items list with new conversion rate
+      this.fetchCurrencyRates(currency)
+        .then(() =>{
+        UICtrl.populateItemsList();
+      })
+        .catch(err => console.log(err));
+      
+    },
+
+    getBaseCurrency: function(){
+      return data.baseCurrency;
     },
 
     getAvaliableCurrencies: function(){
       return currenciesList;
 
     },
+    
+    fetchCurrencyRates: async function(baseCurrency){
+      let url = `https://api.exchangeratesapi.io/latest?base=${baseCurrency}`;
 
+      let exchangeRates = {};
+   
+      const response = await fetch(url);
+      const data = await response.json();
+             
+      for (const [curr, rate] of Object.entries(data.rates)){
+           exchangeRates[curr] = rate;
+      }
+
+      await this.setDataExchangeRates(exchangeRates);
+      
+      
+    },
+
+    setDataExchangeRates: function(exchangeRates){
+      data.exchangeRates = exchangeRates;
+    },
+
+    getDataExchangeRates: function(){
+      return data.exchangeRates;
+    },
+
+    exchangeMoney: function(currency, amount){
+      
+      let money = 0;
+      // get exchange rate
+      const rates = this.getDataExchangeRates();
+      
+      for (const [k,v] of Object.entries(rates)){
+        if (k === currency){
+          money =  (amount / v).toFixed(2);
+        }
+      }
+      
+      // update total
+      // updateTotal(money)
+      return money;
+    },
+
+    
     getDataItems: function(){
       return data.items;
     },
@@ -93,4 +157,6 @@ export const ItemCtrl =  (function(){
 
   }
 })();
+
+
 

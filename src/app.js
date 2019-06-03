@@ -127,11 +127,19 @@ const App = (function(ItemCtrl, UICtrl){
   // Public methods
   return {
     init: function(){
+      
       // TODO: set initial set
+      let baseCurrency = ItemCtrl.getBaseCurrency();
+      ItemCtrl.fetchCurrencyRates(baseCurrency).then(() => {
+
+        // TODO: Populate list with items
+        UICtrl.populateItemsList();
+      });
 
       // TODO: Fetch data from data structure
 
-      // TODO: Populate list with items
+      
+      //UICtrl.populateItemsList();
 
       // TODO: Get calculated amount
 
@@ -145,4 +153,4 @@ const App = (function(ItemCtrl, UICtrl){
 
 // Initialise App
 App.init();
-ItemCtrl.dataLog();
+//ItemCtrl.dataLog();

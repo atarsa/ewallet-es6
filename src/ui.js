@@ -34,6 +34,10 @@ export const UICtrl= (function(){
     
     // Add new item to the existing list
     addListItem: function(item){
+      // Get base currency and exchange money
+      const baseCurrency = ItemCtrl.getBaseCurrency();
+      const convertedAmount = ItemCtrl.exchangeMoney(item.currency, item.amount);
+      
       // Create  li element
       const li = document.createElement('li');
       // Add class and id
@@ -51,15 +55,19 @@ export const UICtrl= (function(){
         </strong>
 
         <span class="secondary-content">
-          <span class="converted-amount">12</span>
-          <span class="base-currency">GBP </span>
+          <span class="converted-amount">${convertedAmount}</span>
+          <span class="base-currency">${baseCurrency}</span>
         </span>
       `;
       // Insert item
       document.querySelector(UISelectors.itemList).insertAdjacentElement('beforeend', li);
 
     },
+
     updateListItem: function(item){
+      const baseCurrency = ItemCtrl.getBaseCurrency();
+      const convertedAmount = ItemCtrl.exchangeMoney(item.currency, item.amount);
+
       document.getElementById(`item-${item.id}`).innerHTML = `
       <a href="#" class="">
         <i class="edit-item fas fa-edit"></i>
@@ -70,9 +78,17 @@ export const UICtrl= (function(){
       </strong>
 
       <span class="secondary-content">
-        <span class="converted-amount">12</span>
-        <span class="base-currency">GBP </span>
+        <span class="converted-amount">${convertedAmount}</span>
+        <span class="base-currency">${baseCurrency}</span>
       </span>`;
+    },
+
+    populateItemsList: function(){
+      const items = ItemCtrl.getDataItems();
+      
+      document.querySelector(UISelectors.itemList).innerHTML = '';
+      items.forEach(item => this.addListItem(item));
+
     },
 
     // Show available currencies list
@@ -115,26 +131,7 @@ export const UICtrl= (function(){
       
     },
 
-    getCurrencyInput: function(e, list){
-      //console.log(e.target)
-      let input;
-      if (list.parentElement.matches('base')){
-        input = UISelectors.itemCurrencyBase
-      } else {
-        input = UISelectors.itemCurrencyInput;
-      }
-      
-      if(e.target.matches('.small')){
-        document.querySelector(input).value = e.target.parentElement.innerText;
-       
-      } else {
-        document.querySelector(input).value = e.target.innerText;      
-      }
-      // clear currency list
-      list.innerHTML = '';
-    },
-
-    
+        
     // Clear input
     clearInput: function(){
       document.querySelector(UISelectors.itemCurrencyInput).value = "";
