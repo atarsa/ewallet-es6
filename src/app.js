@@ -10,9 +10,6 @@ const App = (function(ItemCtrl, UICtrl){
   // Load event listeners
   const loadEventListeners = function(){
     
-    // Add item event 
-    document.querySelector(UISelectors.addBtn).addEventListener('click', itemAddSubmit);
-
     // key down in currency input
     document.querySelectorAll(UISelectors.currencyInput).forEach(input => {
       input.addEventListener('keyup', UICtrl.showCurrencyList);
@@ -23,8 +20,23 @@ const App = (function(ItemCtrl, UICtrl){
       list.addEventListener('click', getCurrencyInput)
     })
 
-    // Listen for delete click
+    // Add item event 
+    document.querySelector(UISelectors.addBtn).addEventListener('click', itemAddSubmit);
+
+    // Update item event
+    document.querySelector(UISelectors.updateBtn).addEventListener('click', itemUpdateSubmit);
+
+    // delete item click event
     document.querySelector(UISelectors.itemsList).addEventListener('click', itemDeleteSubmit);
+
+    // update item click event
+    document.querySelector(UISelectors.itemsList).addEventListener('click', itemEditClick);
+
+    // back item click event
+    document.querySelector(UISelectors.backBtn).addEventListener('click', UICtrl.setDefaultState);
+
+    // clear all click event
+    document.querySelector(UISelectors.clearBtn).addEventListener('click', clearAllClick);
   
   }
 
@@ -79,13 +91,80 @@ const App = (function(ItemCtrl, UICtrl){
       // TODO: show message that no input
       console.log("No input");
     }
-    
-    
-    ItemCtrl.dataLog();
+   
     e.preventDefault();
   }
 
   
+  function itemDeleteSubmit(e){
+    
+    if (e.target.matches('.delete-item')){
+      // get item id
+      const ID = e.target.parentElement.parentElement.getAttribute('data-id');
+     
+           
+      if (confirm('Are you sure?')){
+        // remove item from data.items
+        ItemCtrl.deleteItem(ID);
+        // TODO: remove data from local storage
+
+        // update list item
+        UICtrl.deleteItemFromList(ID);
+      }
+    }
+  }
+
+  function itemEditClick(e){
+    
+    if (e.target.matches('.edit-item')){
+
+      // get item id
+      const ID = e.target.parentElement.parentElement.getAttribute('data-id');
+      
+      // get item
+      const editedItem = ItemCtrl.getItemById(Number.parseInt(ID));
+      
+      // set current item 
+      ItemCtrl.setCurrentItem(editedItem);
+
+      // Update form with editem item
+      UICtrl.addItemToForm();
+
+    }
+  }
+  
+  function itemUpdateSubmit(e){
+    const item = UICtrl.getItemInput();
+    
+    // get only abbrevation for currency input
+    if (item.currency.includes(' ')){
+      item.currency = item.currency.split(" ")[0];
+    }
+    
+    // update current element
+    const updatedItem = ItemCtrl.updateItem(item.currency, item.amount);
+    
+    // update UI
+    UICtrl.updateListItem(updatedItem);
+    UICtrl.clearInput();
+    UICtrl.setDefaultState();
+  }
+
+  function clearAllClick(e){
+
+    if(confirm('Are you sure?')){
+      // clear data.items
+      ItemCtrl.clearDataItems();
+
+      // TODO: clear local storage
+
+      // clear UI
+      UICtrl.clearInput();
+      UICtrl.clearItemsList();
+      UICtrl.updateTotalMoney();
+    }
+  }
+
   function getCurrencyInput(e){
    // Get targeted list 
     let targetedList;
@@ -124,34 +203,17 @@ const App = (function(ItemCtrl, UICtrl){
     
   }
 
-  function itemDeleteSubmit(e){
-    console.log(e.target)
-    if (e.target.matches('.delete-item')){
-      // get item id
-      const ID = e.target.parentElement.parentElement.getAttribute('data-id');
-      console.log(ID)
-           
-      if (confirm('Are you sure?')){
-        // remove item from data.items
-        ItemCtrl.deleteItem(ID);
-        // remove data from local storage
-
-        // update list item
-        UICtrl.deleteItemFromList(ID);
-      }
-      
-    }
-
-  }
-
-
-
+  
   // Public methods
   return {
     init: function(){
       
-      // TODO: set initial set
+      // TODO: set initial state
+      UICtrl.setDefaultState();
+      
       let baseCurrency = ItemCtrl.getBaseCurrency();
+      document.querySelector(UISelectors.baseCurrencyInput).value = baseCurrency;
+      
       ItemCtrl.fetchCurrencyRates(baseCurrency).then(() => {
 
         // TODO: Fetch data from data structure

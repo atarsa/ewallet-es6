@@ -17,7 +17,10 @@ export const UICtrl= (function(){
     totalAmount: 'h4 .total-money',
     totalCurrency: 'h4 .base-currency',
     // buttons
-    addBtn: '.add-btn'
+    addBtn: '.add-btn',
+    updateBtn: '.update-btn',
+    backBtn: '.back-btn',
+    clearBtn: '.clear-btn'
     
   }
   
@@ -80,7 +83,7 @@ export const UICtrl= (function(){
       const baseCurrency = ItemCtrl.getBaseCurrency();
       const convertedAmount = ItemCtrl.exchangeMoney(item.currency, item.amount);
 
-      document.getElementById(`item-${item.id}`).innerHTML = `
+      document.querySelector(`[data-id="${item.id}"]`).innerHTML = `
       <a href="#" class="delete">
         <i class="delete-item fas fa-trash-alt"></i>
       </a>
@@ -166,19 +169,55 @@ export const UICtrl= (function(){
       
     },
 
-     deleteItemFromList: function(id){
+    deleteItemFromList: function(id){
         
         document.querySelector(`[data-id="${id}"]`).remove();
         this.updateTotalMoney();
-        
-     },   
+    },   
+
+    addItemToForm: function(){
+      
+      const item = ItemCtrl.getCurrentItem();
+      
+      document.querySelector(UISelectors.itemCurrencyInput).value = item.currency;
+
+      // disable currency input to prevent multiple same currencies in (currency) list items
+      document.querySelector(UISelectors.itemCurrencyInput).disabled = true;
+
+      document.querySelector(UISelectors.itemAmountInput).value = item.amount;
+
+      // set edit state
+      UICtrl.setEditState();
+
+    },
     // Clear input
     clearInput: function(){
       document.querySelector(UISelectors.itemCurrencyInput).value = "";
       document.querySelector(UISelectors.itemAmountInput).value = "";
     },
 
+    // Deafult state
+    setDefaultState: function(){
+      document.querySelector(UISelectors.itemCurrencyInput).disabled = false;
+      UICtrl.clearInput();
 
+      document.querySelector(UISelectors.addBtn).style.display = "inline";
+      document.querySelector(UISelectors.updateBtn).style.display = "none";
+      document.querySelector(UISelectors.backBtn).style.display = "none";
+    },
+
+
+    // Edit State
+    setEditState: function(){
+      document.querySelector(UISelectors.addBtn).style.display = "none";
+      document.querySelector(UISelectors.updateBtn).style.display = "inline";
+      document.querySelector(UISelectors.backBtn).style.display = "inline";
+    },
+
+    // Clear items list
+    clearItemsList: function(){
+      document.querySelector(UISelectors.itemsList).innerHTML = '';
+    }
 
   }
 })();

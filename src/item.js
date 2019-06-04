@@ -95,6 +95,23 @@ export const ItemCtrl =  (function(){
       data.items.slice(index, 1);
     },
 
+    updateItem: function(currency, amount){
+      let found = null;
+      amount = parseInt(amount);
+
+      data.items.forEach(item => {
+        if (item.id === data.currentItem.id){
+          item.currency = currency;
+          item.amount = amount;
+          found = item;
+        }
+      })
+
+      return found
+
+    },
+
+    
     // Set base currency
     setBaseCurrency: function(currency){
       data.baseCurrency = currency;
@@ -157,10 +174,34 @@ export const ItemCtrl =  (function(){
       return money;
     },
 
-    
-    
+    getItemById: function(ID){
+      let found = null;
+
+      // loop through items
+      data.items.forEach(item => {
+        if(item.id === ID){
+          found = item;
+        }
+      })
+      
+      return found;
+    },
+
     getDataItems: function(){
       return data.items;
+    },
+
+    clearDataItems: function(){
+      data.items = [];
+    },
+
+    setCurrentItem: function(item){
+
+      data.currentItem = item;
+    },
+
+    getCurrentItem:function(){
+      return data.currentItem;
     },
 
     dataLog: function(){
