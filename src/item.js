@@ -90,6 +90,7 @@ export const ItemCtrl =  (function(){
       this.fetchCurrencyRates(currency)
         .then(() =>{
         UICtrl.populateItemsList();
+        UICtrl.updateTotalMoney();
       })
         .catch(err => console.log(err));
       
@@ -146,6 +147,7 @@ export const ItemCtrl =  (function(){
       return money;
     },
 
+    
     
     getDataItems: function(){
       return data.items;

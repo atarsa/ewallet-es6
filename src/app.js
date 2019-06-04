@@ -134,6 +134,7 @@ const App = (function(ItemCtrl, UICtrl){
 
         // TODO: Populate list with items
         UICtrl.populateItemsList();
+        UICtrl.updateTotalMoney();
       });
 
       // TODO: Fetch data from data structure

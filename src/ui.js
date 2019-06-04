@@ -12,6 +12,11 @@ export const UICtrl= (function(){
     currencyListItem: '.currency-list.item',
     currencyListBase: '.currency-list.base',
     currencyList: '.currency-list',
+    convertedAmount: '.converted-amount',
+    // total
+    totalAmount: 'h4 .total-money',
+    totalCurrency: 'h4 .base-currency',
+    // buttons
     addBtn: '.add-btn'
   }
   
@@ -88,6 +93,23 @@ export const UICtrl= (function(){
       
       document.querySelector(UISelectors.itemList).innerHTML = '';
       items.forEach(item => this.addListItem(item));
+
+    },
+
+    updateTotalMoney: function(){
+      // get base currency
+      const baseCurrency = ItemCtrl.getBaseCurrency();
+
+      // get exchanged amount from each item list and calculate total money
+     let total = 0;
+      document.querySelectorAll(UISelectors.convertedAmount).forEach(item => {
+        total += Number.parseFloat(item.innerText);
+      })
+      
+
+      // update UI
+      document.querySelector(UISelectors.totalAmount).innerHTML = total.toFixed(2);
+      document.querySelector(UISelectors.totalCurrency).innerHTML = baseCurrency;
 
     },
 
