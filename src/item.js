@@ -1,4 +1,5 @@
 import { UICtrl } from "./ui";
+import { StorageCtrl } from "./storage";
 
 export const ItemCtrl =  (function(){
   // Item constructor
@@ -10,13 +11,11 @@ export const ItemCtrl =  (function(){
 
   // Data Strucuture
   const data = {
-    items : [{ id: 0, currency: "PLN", amount: 100 },
-    { id: 1, currency: "GBP", amount: 100 }
-      ],
+    items : StorageCtrl.getItemsFromStorage(),
     currentItem: null,
     // init with GBP as defualt
     // TODO: get base currency from local storage on load
-    baseCurrency: "GBP",
+    baseCurrency: StorageCtrl.getBaseCurrencyFromStorage(),
     exchangeRates: {}
   }
 
@@ -80,6 +79,9 @@ export const ItemCtrl =  (function(){
       let newItem = new Item(ID, currency, amount);
       // Add to items array
       data.items.push(newItem);
+
+      // Add to local storage
+      StorageCtrl.addItemToStorage(newItem);
       return newItem;
     },
 
@@ -115,6 +117,10 @@ export const ItemCtrl =  (function(){
     // Set base currency
     setBaseCurrency: function(currency){
       data.baseCurrency = currency;
+
+      // update local storage
+      StorageCtrl.addBaseCurrencyToStorage(currency);
+      
       // update items list with new conversion rate
       this.fetchCurrencyRates(currency)
         .then(() =>{

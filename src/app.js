@@ -1,8 +1,9 @@
 import {ItemCtrl} from './item';
 import {UICtrl} from './ui';
+import {StorageCtrl} from './storage';
 
 
-const App = (function(ItemCtrl, UICtrl){
+const App = (function(ItemCtrl, UICtrl, StorageCtrl){
 
   // Get UI Selectors
   const UISelectors = UICtrl.getSelectors();
@@ -79,7 +80,8 @@ const App = (function(ItemCtrl, UICtrl){
           } else {
             // Add new item
             let newItem = ItemCtrl.addItem(input.currency, input.amount);
-              UICtrl.addListItem(newItem);
+            
+            UICtrl.addListItem(newItem);
           }
             
         }
@@ -107,7 +109,7 @@ const App = (function(ItemCtrl, UICtrl){
         // remove item from data.items
         ItemCtrl.deleteItem(ID);
         // TODO: remove data from local storage
-
+        StorageCtrl.removeItemFromStorage(ID);
         // update list item
         UICtrl.deleteItemFromList(ID);
       }
@@ -144,6 +146,8 @@ const App = (function(ItemCtrl, UICtrl){
     // update current element
     const updatedItem = ItemCtrl.updateItem(item.currency, item.amount);
     
+    // update local storage
+    StorageCtrl.updateItemFromStorage(updatedItem);
     // update UI
     UICtrl.updateListItem(updatedItem);
     UICtrl.clearInput();
@@ -157,6 +161,7 @@ const App = (function(ItemCtrl, UICtrl){
       ItemCtrl.clearDataItems();
 
       // TODO: clear local storage
+      StorageCtrl.clearAllStorage();
 
       // clear UI
       UICtrl.clearInput();
@@ -229,7 +234,7 @@ const App = (function(ItemCtrl, UICtrl){
     }
   }
 
-})(ItemCtrl, UICtrl);
+})(ItemCtrl, UICtrl, StorageCtrl);
 
 // Initialise App
 App.init();
