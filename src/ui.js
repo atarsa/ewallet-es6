@@ -7,7 +7,7 @@ export const UICtrl= (function(){
     baseCurrencyInput: '#base-currency',
     currencyInput: '.currency-input',
     itemAmountInput: '#item-amount',
-    itemList: '#items-list',
+    itemsList: '#items-list',
     listItems: '#items-list li',
     currencyListItem: '.currency-list.item',
     currencyListBase: '.currency-list.base',
@@ -18,6 +18,7 @@ export const UICtrl= (function(){
     totalCurrency: 'h4 .base-currency',
     // buttons
     addBtn: '.add-btn'
+    
   }
   
   // Public methods
@@ -47,11 +48,14 @@ export const UICtrl= (function(){
       const li = document.createElement('li');
       // Add class and id
       li.className = 'collection-item';
-      li.id=  `item-${item.id}`;
+      li.setAttribute('data-id', item.id);
 
       // Add html
       li.innerHTML = `
-        <a href="#" class="">
+        <a href="#" class="delete">
+          <i class="delete-item fas fa-trash-alt"></i>
+        </a>
+        <a href="#" class="update">
           <i class="edit-item fas fa-edit"></i>
         </a>
         <strong>
@@ -65,7 +69,10 @@ export const UICtrl= (function(){
         </span>
       `;
       // Insert item
-      document.querySelector(UISelectors.itemList).insertAdjacentElement('beforeend', li);
+      document.querySelector(UISelectors.itemsList).insertAdjacentElement('beforeend', li);
+
+      // Update total money
+      this.updateTotalMoney();
 
     },
 
@@ -74,7 +81,10 @@ export const UICtrl= (function(){
       const convertedAmount = ItemCtrl.exchangeMoney(item.currency, item.amount);
 
       document.getElementById(`item-${item.id}`).innerHTML = `
-      <a href="#" class="">
+      <a href="#" class="delete">
+        <i class="delete-item fas fa-trash-alt"></i>
+      </a>
+      <a href="#" class="update">
         <i class="edit-item fas fa-edit"></i>
       </a>
       <strong>
@@ -86,12 +96,15 @@ export const UICtrl= (function(){
         <span class="converted-amount">${convertedAmount}</span>
         <span class="base-currency">${baseCurrency}</span>
       </span>`;
+
+      // Update total money
+      this.updateTotalMoney();
     },
 
     populateItemsList: function(){
       const items = ItemCtrl.getDataItems();
       
-      document.querySelector(UISelectors.itemList).innerHTML = '';
+      document.querySelector(UISelectors.itemsList).innerHTML = '';
       items.forEach(item => this.addListItem(item));
 
     },
@@ -153,7 +166,12 @@ export const UICtrl= (function(){
       
     },
 
+     deleteItemFromList: function(id){
         
+        document.querySelector(`[data-id="${id}"]`).remove();
+        this.updateTotalMoney();
+        
+     },   
     // Clear input
     clearInput: function(){
       document.querySelector(UISelectors.itemCurrencyInput).value = "";

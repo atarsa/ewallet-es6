@@ -18,11 +18,13 @@ const App = (function(ItemCtrl, UICtrl){
       input.addEventListener('keyup', UICtrl.showCurrencyList);
     })
    
-
     // click on currency list item
     document.querySelectorAll(UISelectors.currencyList).forEach(list => {
       list.addEventListener('click', getCurrencyInput)
     })
+
+    // Listen for delete click
+    document.querySelector(UISelectors.itemsList).addEventListener('click', itemDeleteSubmit);
   
   }
 
@@ -122,6 +124,26 @@ const App = (function(ItemCtrl, UICtrl){
     
   }
 
+  function itemDeleteSubmit(e){
+    console.log(e.target)
+    if (e.target.matches('.delete-item')){
+      // get item id
+      const ID = e.target.parentElement.parentElement.getAttribute('data-id');
+      console.log(ID)
+           
+      if (confirm('Are you sure?')){
+        // remove item from data.items
+        ItemCtrl.deleteItem(ID);
+        // remove data from local storage
+
+        // update list item
+        UICtrl.deleteItemFromList(ID);
+      }
+      
+    }
+
+  }
+
 
 
   // Public methods
@@ -132,18 +154,13 @@ const App = (function(ItemCtrl, UICtrl){
       let baseCurrency = ItemCtrl.getBaseCurrency();
       ItemCtrl.fetchCurrencyRates(baseCurrency).then(() => {
 
-        // TODO: Populate list with items
+        // TODO: Fetch data from data structure
+
+        //Populate list with items
         UICtrl.populateItemsList();
+        //  Get converted total money
         UICtrl.updateTotalMoney();
       });
-
-      // TODO: Fetch data from data structure
-
-      
-      //UICtrl.populateItemsList();
-
-      // TODO: Get calculated amount
-
 
       // Load event listeners
       loadEventListeners();

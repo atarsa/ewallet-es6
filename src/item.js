@@ -83,6 +83,18 @@ export const ItemCtrl =  (function(){
       return newItem;
     },
 
+    deleteItem: function(id){
+      // get ids
+      const ids = data.items.map(item => {
+        return item.id
+      });
+
+      // get the index
+      const index = ids.indexOf(id);
+      // delete item from array
+      data.items.slice(index, 1);
+    },
+
     // Set base currency
     setBaseCurrency: function(currency){
       data.baseCurrency = currency;
@@ -142,8 +154,6 @@ export const ItemCtrl =  (function(){
         }
       }
       
-      // update total
-      // updateTotal(money)
       return money;
     },
 
