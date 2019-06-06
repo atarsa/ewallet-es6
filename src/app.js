@@ -52,6 +52,7 @@ const App = (function(ItemCtrl, UICtrl, StorageCtrl){
       // check if number is positive
       if (input.amount < 0){
         // TODO: show alert with msg
+        UICtrl.showAlert("Amount must be positive.");
         
       } else   {
         // get currency abbreviation
@@ -94,7 +95,7 @@ const App = (function(ItemCtrl, UICtrl, StorageCtrl){
       }
     } else{
       // TODO: show message that no input
-      console.log("No input");
+      UICtrl.showAlert("Please fill the form.");
     }
     ItemCtrl.dataLog();
     e.preventDefault();
@@ -231,13 +232,10 @@ const App = (function(ItemCtrl, UICtrl, StorageCtrl){
       
       ItemCtrl.fetchCurrencyRates(baseCurrency).then(() => {
 
-        // TODO: Fetch data from data structure
-
-        //Populate list with items
+        // Populate list with items
         UICtrl.populateItemsList();
-        //  Get converted total money
+        // Get converted total money
         UICtrl.updateTotalMoney();
-
         // check if any items in the list
         UICtrl.checkForItems();
       });

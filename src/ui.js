@@ -34,6 +34,7 @@ export const UICtrl= (function(){
     getItemInput: function(){
       const currency = document.querySelector(UISelectors.itemCurrencyInput).value;
       const amount =  document.querySelector(UISelectors.itemAmountInput).value;
+      
       return {
         currency,
         amount
@@ -61,11 +62,10 @@ export const UICtrl= (function(){
         <a href="#" class="update">
           <i class="edit-item fas fa-edit"></i>
         </a>
-        <strong>
-          <span class="amount">${item.amount}</span>
-          <span class="currency">${item.currency}</span>
-        </strong>
-
+        
+        <span class="amount">${item.amount}</span>
+        <span class="currency">${item.currency}</span>
+       
         <span class="secondary-content">
           <span class="converted-amount">${convertedAmount}</span>
           <span class="base-currency">${baseCurrency}</span>
@@ -92,11 +92,9 @@ export const UICtrl= (function(){
       <a href="#" class="update">
         <i class="edit-item fas fa-edit"></i>
       </a>
-      <strong>
-        <span class="amount">${item.amount}</span>
-        <span class="currency">${item.currency}</span>
-      </strong>
-
+      <span class="amount">${item.amount}</span>
+      <span class="currency">${item.currency}</span>
+      
       <span class="secondary-content">
         <span class="converted-amount">${convertedAmount}</span>
         <span class="base-currency">${baseCurrency}</span>
@@ -255,6 +253,23 @@ export const UICtrl= (function(){
       }
 
       return currencyFullName;
+    },
+
+    showAlert: function(msg){
+      // select div
+      const alert = document.querySelector('.card .alert');
+      alert.innerText = msg;
+      alert.style.display = "block";
+
+      //clear after 3 seconds
+      setTimeout(()=>{
+        this.hideAlert();
+      }, 2000);
+         
+    },
+
+    hideAlert: function(){
+      document.querySelector('.alert').style.display = "none";
     }
   }
 })();
