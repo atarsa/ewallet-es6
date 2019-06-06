@@ -94,7 +94,7 @@ export const ItemCtrl =  (function(){
       // get the index
       const index = ids.indexOf(id);
       // delete item from array
-      data.items.slice(index, 1);
+      data.items.splice(index, 1);
     },
 
     updateItem: function(currency, amount){

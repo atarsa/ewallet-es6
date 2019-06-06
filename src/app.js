@@ -1,6 +1,7 @@
 import {ItemCtrl} from './item';
 import {UICtrl} from './ui';
 import {StorageCtrl} from './storage';
+import css from './styles/app.css';
 
 
 const App = (function(ItemCtrl, UICtrl, StorageCtrl){
@@ -66,6 +67,7 @@ const App = (function(ItemCtrl, UICtrl, StorageCtrl){
           UICtrl.addListItem(newItem);
 
         } else {
+          
           // check if currency already in the list
           let found =  dataItems.find(function(element) {
 
@@ -87,13 +89,14 @@ const App = (function(ItemCtrl, UICtrl, StorageCtrl){
         }
         // Clear input
         UICtrl.clearInput();
+        
       
       }
     } else{
       // TODO: show message that no input
       console.log("No input");
     }
-   
+    ItemCtrl.dataLog();
     e.preventDefault();
   }
 
@@ -112,6 +115,9 @@ const App = (function(ItemCtrl, UICtrl, StorageCtrl){
         StorageCtrl.removeItemFromStorage(ID);
         // update list item
         UICtrl.deleteItemFromList(ID);
+        // check if any items left
+        UICtrl.checkForItems();
+
       }
     }
   }
@@ -167,6 +173,8 @@ const App = (function(ItemCtrl, UICtrl, StorageCtrl){
       UICtrl.clearInput();
       UICtrl.clearItemsList();
       UICtrl.updateTotalMoney();
+      // hide items list as none items left
+      UICtrl.checkForItems();
     }
   }
 
@@ -213,11 +221,13 @@ const App = (function(ItemCtrl, UICtrl, StorageCtrl){
   return {
     init: function(){
       
-      // TODO: set initial state
+      // set initial state
       UICtrl.setDefaultState();
       
-      let baseCurrency = ItemCtrl.getBaseCurrency();
-      document.querySelector(UISelectors.baseCurrencyInput).value = baseCurrency;
+      const baseCurrency = ItemCtrl.getBaseCurrency();
+      const currencyFullName = UICtrl.getCurrencyFullName(baseCurrency);
+
+      document.querySelector(UISelectors.baseCurrencyInput).value = `${baseCurrency} ${currencyFullName}`;
       
       ItemCtrl.fetchCurrencyRates(baseCurrency).then(() => {
 
@@ -227,6 +237,9 @@ const App = (function(ItemCtrl, UICtrl, StorageCtrl){
         UICtrl.populateItemsList();
         //  Get converted total money
         UICtrl.updateTotalMoney();
+
+        // check if any items in the list
+        UICtrl.checkForItems();
       });
 
       // Load event listeners

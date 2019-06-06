@@ -77,6 +77,8 @@ export const UICtrl= (function(){
       // Update total money
       this.updateTotalMoney();
 
+      // check if items list previously empty
+      this.checkForItems();
     },
 
     updateListItem: function(item){
@@ -102,6 +104,7 @@ export const UICtrl= (function(){
 
       // Update total money
       this.updateTotalMoney();
+    
     },
 
     populateItemsList: function(){
@@ -126,7 +129,7 @@ export const UICtrl= (function(){
       // update UI
       document.querySelector(UISelectors.totalAmount).innerHTML = total.toFixed(2);
       document.querySelector(UISelectors.totalCurrency).innerHTML = baseCurrency;
-
+   
     },
 
     // Show available currencies list
@@ -165,21 +168,25 @@ export const UICtrl= (function(){
         }
       }
       currencyList.innerHTML = ulHtml;
-
-      
+     
     },
 
     deleteItemFromList: function(id){
         
         document.querySelector(`[data-id="${id}"]`).remove();
         this.updateTotalMoney();
+
+        // check if any any items left on the list
+        this.checkForItems();
     },   
 
     addItemToForm: function(){
       
       const item = ItemCtrl.getCurrentItem();
       
-      document.querySelector(UISelectors.itemCurrencyInput).value = item.currency;
+      let currencyFullName = this.getCurrencyFullName(item.currency);
+      
+      document.querySelector(UISelectors.itemCurrencyInput).value = `${item.currency} ${currencyFullName}` ;
 
       // disable currency input to prevent multiple same currencies in (currency) list items
       document.querySelector(UISelectors.itemCurrencyInput).disabled = true;
@@ -217,7 +224,37 @@ export const UICtrl= (function(){
     // Clear items list
     clearItemsList: function(){
       document.querySelector(UISelectors.itemsList).innerHTML = '';
-    }
+    },
 
+    // Check if items list empty
+    checkForItems: function(){
+
+      const list = document.querySelector(UISelectors.itemsList);
+      
+      // if list empty set border
+      // otherwise remove border
+      if(list.children.length === 0){
+        list.style.border = "none";
+      } else {
+        list.style.border = "1px solid #e0e0e0";
+      }
+
+    },
+
+    getCurrencyFullName: function(currencyAbrr){
+      // iterate through available currencies
+      // to get full currency name
+      let currencyFullName = '';
+      const currencyList = ItemCtrl.getAvaliableCurrencies();
+      
+      for (let [k, v] of Object.entries(currencyList)){
+        if (k === currencyAbrr){
+          currencyFullName = v;
+          break;
+        }
+      }
+
+      return currencyFullName;
+    }
   }
 })();
