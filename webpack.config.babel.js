@@ -1,6 +1,7 @@
 import path from 'path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import ScriptExtHtmlWebpackPlugin from 'script-ext-html-webpack-plugin';
+
 export default {
     entry: path.join(__dirname, 'src/app.js'),
     output: {
@@ -8,13 +9,18 @@ export default {
         filename: 'app.js'
     },
     module: {
-        rules: [{
+        rules: [
+            {
             test: /\.js/,
             exclude: /(node_modules|bower_components)/,
-            use: [{
-                loader: 'babel-loader'
-            }]
-        }]
+            use: ['babel-loader']
+            },
+            {
+                test:/\.css$/i,
+                use:['style-loader','css-loader']
+            }
+        ]
+        
     },
     plugins: [
         new HtmlWebpackPlugin({
