@@ -1,7 +1,8 @@
 import {ItemCtrl} from './item';
 import {UICtrl} from './ui';
 import {StorageCtrl} from './storage';
-import css from './styles/app.css';
+import './styles/styles.css';
+
 
 
 const App = (function(ItemCtrl, UICtrl, StorageCtrl){
@@ -12,7 +13,7 @@ const App = (function(ItemCtrl, UICtrl, StorageCtrl){
   // Load event listeners
   const loadEventListeners = function(){
     
-    // key down in currency input
+    // key up in currency input
     document.querySelectorAll(UISelectors.currencyInput).forEach(input => {
       input.addEventListener('keyup', UICtrl.showCurrencyList);
     })
@@ -22,19 +23,19 @@ const App = (function(ItemCtrl, UICtrl, StorageCtrl){
       list.addEventListener('click', getCurrencyInput)
     })
 
-    // Add item event 
+    // Add item submit event 
     document.querySelector(UISelectors.addBtn).addEventListener('click', itemAddSubmit);
 
-    // Update item event
+    // Update item submit event
     document.querySelector(UISelectors.updateBtn).addEventListener('click', itemUpdateSubmit);
 
-    // delete item click event
+    // delete item submit event
     document.querySelector(UISelectors.itemsList).addEventListener('click', itemDeleteSubmit);
 
-    // update item click event
+    // edit item click event
     document.querySelector(UISelectors.itemsList).addEventListener('click', itemEditClick);
 
-    // back item click event
+    // back button click event
     document.querySelector(UISelectors.backBtn).addEventListener('click', UICtrl.setDefaultState);
 
     // clear all click event
@@ -51,7 +52,7 @@ const App = (function(ItemCtrl, UICtrl, StorageCtrl){
 
       // check if number is positive
       if (input.amount < 0){
-        // TODO: show alert with msg
+        // show alert with msg
         UICtrl.showAlert("Amount must be positive.");
         
       } else   {
@@ -89,12 +90,12 @@ const App = (function(ItemCtrl, UICtrl, StorageCtrl){
             
         }
         // Clear input
-        UICtrl.clearInput();
+        UICtrl.clearUserInput();
         
       
       }
     } else{
-      // TODO: show message that no input
+      // show message that no input
       UICtrl.showAlert("Please fill the form.");
     }
     ItemCtrl.dataLog();
@@ -112,12 +113,12 @@ const App = (function(ItemCtrl, UICtrl, StorageCtrl){
       if (confirm('Are you sure?')){
         // remove item from data.items
         ItemCtrl.deleteItem(ID);
-        // TODO: remove data from local storage
+        // remove data from local storage
         StorageCtrl.removeItemFromStorage(ID);
         // update list item
         UICtrl.deleteItemFromList(ID);
-        // check if any items left
-        UICtrl.checkForItems();
+        // hide border if none items left
+        UICtrl.toggleItemsListBorder();
 
       }
     }
@@ -136,7 +137,7 @@ const App = (function(ItemCtrl, UICtrl, StorageCtrl){
       // set current item 
       ItemCtrl.setCurrentItem(editedItem);
 
-      // Update form with editem item
+      // Update form with edited item
       UICtrl.addItemToForm();
 
     }
@@ -145,19 +146,19 @@ const App = (function(ItemCtrl, UICtrl, StorageCtrl){
   function itemUpdateSubmit(e){
     const item = UICtrl.getItemInput();
     
-    // get only abbrevation for currency input
+    // get only abbrevation from currency input
     if (item.currency.includes(' ')){
       item.currency = item.currency.split(" ")[0];
     }
     
-    // update current element
+    // update current item
     const updatedItem = ItemCtrl.updateItem(item.currency, item.amount);
     
     // update local storage
-    StorageCtrl.updateItemFromStorage(updatedItem);
+    StorageCtrl.updateItemInStorage(updatedItem);
     // update UI
     UICtrl.updateListItem(updatedItem);
-    UICtrl.clearInput();
+    UICtrl.clearUserInput();
     UICtrl.setDefaultState();
   }
 
@@ -167,15 +168,15 @@ const App = (function(ItemCtrl, UICtrl, StorageCtrl){
       // clear data.items
       ItemCtrl.clearDataItems();
 
-      // TODO: clear local storage
+      // clear local storage
       StorageCtrl.clearAllStorage();
 
       // clear UI
-      UICtrl.clearInput();
+      UICtrl.clearUserInput();
       UICtrl.clearItemsList();
       UICtrl.updateTotalMoney();
       // hide items list as none items left
-      UICtrl.checkForItems();
+      UICtrl.toggleItemsListBorder();
     }
   }
 
@@ -236,8 +237,8 @@ const App = (function(ItemCtrl, UICtrl, StorageCtrl){
         UICtrl.populateItemsList();
         // Get converted total money
         UICtrl.updateTotalMoney();
-        // check if any items in the list
-        UICtrl.checkForItems();
+        // hide border if no items in the list
+        UICtrl.toggleItemsListBorder();
       });
 
       // Load event listeners

@@ -38,7 +38,7 @@ export const StorageCtrl = (function(){
       return items
     },
 
-    updateItemFromStorage: function(updatedItem){
+    updateItemInStorage: function(updatedItem){
       let items = JSON.parse(localStorage.getItem('items'));
 
       items.forEach((item, index) => {

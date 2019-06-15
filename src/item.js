@@ -13,8 +13,6 @@ export const ItemCtrl =  (function(){
   const data = {
     items : StorageCtrl.getItemsFromStorage(),
     currentItem: null,
-    // init with GBP as defualt
-    // TODO: get base currency from local storage on load
     baseCurrency: StorageCtrl.getBaseCurrencyFromStorage(),
     exchangeRates: {}
   }

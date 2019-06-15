@@ -50,7 +50,7 @@ export const UICtrl= (function(){
       
       // Create  li element
       const li = document.createElement('li');
-      // Add class and id
+      // Add class and data attribute
       li.className = 'collection-item';
       li.setAttribute('data-id', item.id);
 
@@ -78,7 +78,8 @@ export const UICtrl= (function(){
       this.updateTotalMoney();
 
       // check if items list previously empty
-      this.checkForItems();
+      // if so, show border
+      this.toggleItemsListBorder();
     },
 
     updateListItem: function(item){
@@ -152,7 +153,7 @@ export const UICtrl= (function(){
 
       }
             
-      // clear list on each key down
+      // clear list on each key up
       currencyList.innerHTML = '';
       
 
@@ -175,7 +176,8 @@ export const UICtrl= (function(){
         this.updateTotalMoney();
 
         // check if any any items left on the list
-        this.checkForItems();
+        // if so hide border
+        this.toggleItemsListBorder();
     },   
 
     addItemToForm: function(){
@@ -196,15 +198,20 @@ export const UICtrl= (function(){
 
     },
     // Clear input
-    clearInput: function(){
+    clearUserInput: function(){
       document.querySelector(UISelectors.itemCurrencyInput).value = "";
       document.querySelector(UISelectors.itemAmountInput).value = "";
+    },
+
+    // Clear items list
+    clearItemsList: function(){
+      document.querySelector(UISelectors.itemsList).innerHTML = '';
     },
 
     // Deafult state
     setDefaultState: function(){
       document.querySelector(UISelectors.itemCurrencyInput).disabled = false;
-      UICtrl.clearInput();
+      UICtrl.clearUserInput();
 
       document.querySelector(UISelectors.addBtn).style.display = "inline";
       document.querySelector(UISelectors.updateBtn).style.display = "none";
@@ -219,13 +226,9 @@ export const UICtrl= (function(){
       document.querySelector(UISelectors.backBtn).style.display = "inline";
     },
 
-    // Clear items list
-    clearItemsList: function(){
-      document.querySelector(UISelectors.itemsList).innerHTML = '';
-    },
-
-    // Check if items list empty
-    checkForItems: function(){
+   
+    // Show/ hide border 
+    toggleItemsListBorder: function(){
 
       const list = document.querySelector(UISelectors.itemsList);
       
@@ -236,7 +239,6 @@ export const UICtrl= (function(){
       } else {
         list.style.border = "1px solid #e0e0e0";
       }
-
     },
 
     getCurrencyFullName: function(currencyAbrr){
@@ -251,7 +253,6 @@ export const UICtrl= (function(){
           break;
         }
       }
-
       return currencyFullName;
     },
 
@@ -265,7 +266,7 @@ export const UICtrl= (function(){
       setTimeout(()=>{
         this.hideAlert();
       }, 2000);
-         
+      
     },
 
     hideAlert: function(){
