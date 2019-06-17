@@ -1,0 +1,28 @@
+/*  === Currency list additional styles === */
+.currency-list {
+  border: none;
+}
+
+.small {
+  font-size: 80%;
+}
+
+
+/* === icons === */
+.btn .fas {
+  font-size: 100%;
+}
+
+.delete {
+  color: #ef5350;
+}
+
+.update {
+  color: #ffa726;
+}
+
+.alert {
+  background-color: #e57373a4;
+  font-weight: 300;
+  display: none;
+}

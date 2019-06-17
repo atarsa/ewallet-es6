@@ -1,7 +1,8 @@
 import {ItemCtrl} from './item';
 import {UICtrl} from './ui';
 import {StorageCtrl} from './storage';
-import './styles/styles.css';
+require('./scss/style.scss');
+
 
 
 
