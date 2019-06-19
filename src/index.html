@@ -5,22 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-  <!-- Materialize -->
-  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> -->
   <!-- icons -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
     integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
-
 
   <title>Multi-currency eWallet</title>
 </head>
 
 <body>
   <nav>
-    <div class="nav-wrapper light-green">
+    <div class="nav-wrapper grey lighten-3">
       <div class="container">
-        <a href="#" class="brand-logo center"> eWallet</a>
+        <a href="#" class="brand-logo left grey-text ">Currency Converter eWallet</a>
         <ul class="right">
+          <li>
+            <a href="#" class=" btn light-green lighten-3">GBP</a>
+          </li>
           <li>
             <a href="#" class="clear-btn btn light-green lighten-3">Clear All</a>
           </li>
@@ -31,11 +31,11 @@
 
   <br>
   <div class="container">
+
     <div class="card">
       <div class="card-content">
-
         <div class="row">
-          <h5 class="card-title col s6">Base Currency:</h5>
+          <h5 class="col s6">Base Currency:</h5>
 
           <input type="text" id="base-currency" class="input-field col s6 currency-input base"
             placeholder="Choose base currency">
@@ -43,52 +43,110 @@
           <ul class="currency-list base collection col s6"></ul>
 
         </div>
-
       </div>
     </div>
 
-    <div class="card">
-      <div class="card-content">
+    <div class="row">
 
-        <span class="card-title">Add Money To Wallet</span>
-        <form class="col" autocomplete="off">
-          <div class="row">
+      <!-- currency converter card -->
+      <div class="col s12 m8">
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title">Add to Wallet:</span>
+            <div class="row">
+              <div class="col s4">
+                <div class="input-field ">
+                  <input type="number" id="item-amount" placeholder="Add Amount To Convert">
+                  <label for="item-amount" class="active">Amount</label>
+                </div>
+              </div>
+              <div class="col s8">
+                <div class="input-field">
+                  <input type="text" id="item-currency" class="currency-input item" placeholder="Choose Currency"
+                    autocomplete="off">
+                  <label for="item-currency" class="active">Currency</label>
 
-            <div class="input-field col s6">
-              <input type="text" id="item-currency" class="currency-input item" placeholder="Choose Currency">
-              <label for="item-currency" class="active">Currency</label>
+                  <ul class="currency-list item collection"></ul>
 
-              <ul class="currency-list item collection"></ul>
-
+                </div>
+              </div>
             </div>
-            <div class="input-field col s6">
-              <input type="number" id="item-amount" placeholder="Add Amount To Convert">
-              <label for="item-amount" class="active">Amount</label>
-            </div>
-          </div>
-          <button class="add-btn btn light-green darken-1"><i class="fas fa-plus"></i> Add Money</button>
-          <button class="update-btn btn orange lighten-1"><i class="fas fa-edit"></i> Update Amount</button>
-          <button class="back-btn btn grey lighten-1"><i class="fas fa-chevron-circle-left"></i>
-            Back</button>
+          </div> <!-- end of .card-content -->
 
-        </form>
-      </div> <!-- end of .card-content -->
-    </div> <!-- end of .card -->
+          <div class="card-action">
+            <div class="row">
+              <div class="col s6">
+                <p>Your Rate:</p>
+                <div>GBP 1 = EUR 1.0895</div>
+                <small>Last updated 2019 June 19 12:04</small>
+              </div>
 
+              <div class="col s6">
+                <br>
+                <br>
+                <button class="add-btn btn light-green  darken-1 right"><i class="fas fa-plus"></i> Add Money</button>
+                <div class="right">
+                  <button class="update-btn btn orange lighten-1 "><i class="fas fa-edit"></i> Update Amount</button>
+                  <button class="back-btn btn grey lighten-1 "><i class="fas fa-chevron-circle-left "></i>
+                    Back</button>
+                </div>
+              </div>
+            </div> <!-- end of .row -->
+          </div> <!-- end of .card-action -->
+        </div> <!-- end of .card -->
+      </div> <!-- end of .col -->
+
+      <!-- today's rates card -->
+      <div class="col s12 m4">
+        <div class="card">
+          <span class="card-title">Today's rates:</span>
+          <div class="card-content">
+            <ul class="collection">
+              <li class="collection-item">
+                GBP 1.0923
+              </li>
+              <li class="collection-item">
+                GBP 1.0923
+              </li>
+              <li class="collection-item">
+                GBP 1.0923
+              </li>
+              <li class="collection-item">
+                GBP 1.0923
+              </li>
+              <li class="collection-item">
+                GBP 1.0923
+              </li>
+            </ul>
+            <button class="btn blue">Check Rates</button>
+          </div> <!-- end of .card-content -->
+        </div> <!-- end of .card -->
+      </div> <!-- end of .col -->
+
+    </div> <!-- end of .row -->
+
+    <!-- alert card -->
     <div class="card ">
       <div class="card-content alert"></div>
     </div>
-    <!-- Items list -->
-    <h4 class="right-align">Total:
-      <span class="total-money"></span>
-      <span class="base-currency"></span>
-    </h4>
-    <ul id="items-list" class="collection">
-    </ul>
+
+    <!-- wallet -->
+    <div class="wallet">
+      <h4>Your Wallet:</h4>
+      <!-- Items list -->
+      <h4 class="right-align">Total:
+        <span class="total-money"></span>
+        <span class="base-currency"></span>
+      </h4>
+      <ul id="items-list" class="collection">
+      </ul>
+    </div>
+
 
 
   </div> <!-- end of .container -->
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </body>
 
 </html>
