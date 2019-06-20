@@ -39,11 +39,24 @@ module.exports = function (env, argv) {
           
         },
         {
-          test: /\.scss$/,
+          test: /\.s?css$/,
           use: [
             MiniCssExtractPlugin.loader,
             "css-loader",
-            "sass-loader"
+            {
+              loader: 'resolve-url-loader',
+              options: {
+              root: path.join(__dirname, 'dist')
+              }
+            },
+            
+            {
+              loader: 'sass-loader',
+              options: {
+                sourceMap: true,
+                sourceMapContents: false
+              }
+            }
           ]
         },
         {

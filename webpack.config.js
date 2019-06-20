@@ -44,8 +44,19 @@ module.exports = function(){
           sideEffects: true,
           use: [
             "style-loader", // Inject styles into DOM
-            "css-loader", // 2. Turns css into commonjs
-            "sass-loader" // 1. Turns sass into css
+            "css-loader", // Turns css into commonjs
+            {loader: 'resolve-url-loader',
+            options: {
+              root: path.join(__dirname, 'src')
+            }}, // Resolves files path from scss
+            
+            {
+              loader: 'sass-loader',
+              options: {
+                sourceMap: true,
+                sourceMapContents: false
+              }
+            }//  Turns sass into css
           ]
         },
         {
