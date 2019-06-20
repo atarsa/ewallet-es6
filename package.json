@@ -34,5 +34,8 @@
     "webpack": "^4.34.0",
     "webpack-cli": "^3.3.4",
     "webpack-dev-server": "^3.7.1"
+  },
+  "dependencies": {
+    "flag-icon-css": "^3.3.0"
   }
 }
