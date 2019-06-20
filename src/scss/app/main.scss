@@ -1,6 +1,11 @@
+body {
+  //background-image: url("./../images/white-waves.png");
+}
+
 /*  === Currency list additional styles === */
-.currency-list {
-  border: none;
+
+.collection-item:hover {
+  background-color: #eee;
 }
 
 .small {

@@ -14,46 +14,46 @@ export const ItemCtrl =  (function(){
     items : StorageCtrl.getItemsFromStorage(),
     currentItem: null,
     baseCurrency: StorageCtrl.getBaseCurrencyFromStorage(),
-    exchangeRates: {}
+    exchangeRates: {},
+    exchangeRateLastUpdate: null
   }
 
-  // Available currencies
+  // Available currencies with full names and country code
   /* list compatible with https://exchangeratesapi.io/ and foreign exchange rates published by the European Central Bank https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html */
-  const currenciesList = {'EUR': 'Euro',
-                          'USD': 'US dollar',
-                          'JPY': 'Japanese yen',
-                          'BGN': 'Bulgarian lev',
-                          'CZK': 'Czech koruna',
-                          'DKK': 'Danish krone',
-                          'GBP': 	'Pound sterling',
-                          'HUF' :	'Hungarian forint',
-                          'PLN' :	'Polish zloty',
-                          'RON' :	'Romanian leu',
-                          'SEK' :	'Swedish krona',
-                          'CHF' :	'Swiss franc',
-                          'ISK' :	'Icelandic krona',
-                          'NOK' :	'Norwegian krone',
-                          'HRK' :	'Croatian kuna',
-                          'RUB' :	'Russian rouble',
-                          'TRY' :	'Turkish lira',
-                          'AUD' :	'Australian dollar',
-                          'BRL': 	'Brazilian real',
-                          'CAD': 	'Canadian dollar',
-                          'CNY' :  'Chinese yuan renminbi',
-                          'HKD'  : 'Hong Kong dollar',
-                          'IDR'  : 'Indonesian rupiah',
-                          'ILS' :	'Israeli shekel',
-                          'INR' :	'Indian rupee',
-                          'KRW' :'South Korean won',
-                          'MXN' :	'Mexican peso',
-                          'MYR' :	'Malaysian ringgit',
-                          'NZD' :	'New Zealand dollar',
-                          'PHP' :	'Philippine peso',
-                          'SGD' :	'Singapore dollar',
-                          'THB' :	'Thai baht',
-                          'ZAR': 	'South African rand'
+  const currenciesList = {'EUR': ['Euro', 'eu'],
+                          'USD': ['US dollar', 'us'],
+                          'JPY': ['Japanese yen', 'jp'],
+                          'BGN': ['Bulgarian lev', 'bg'],
+                          'CZK': ['Czech koruna','cz'],
+                          'DKK': ['Danish krone','dk'],
+                          'GBP': 	['Pound sterling', 'gb'],
+                          'HUF' :	['Hungarian forint','hu'],
+                          'PLN' :	['Polish zloty', 'pl'],
+                          'RON' :	['Romanian leu','ro'],
+                          'SEK' :	['Swedish krona', 'se'],
+                          'CHF' :	['Swiss franc', 'ch'],
+                          'ISK' :	['Icelandic krona','is'],
+                          'NOK' :	['Norwegian krone','no'],
+                          'HRK' :	['Croatian kuna','hr'],
+                          'RUB' :	['Russian rouble', 'ru'],
+                          'TRY' :	['Turkish lira', 'tr'],
+                          'AUD' :	['Australian dollar', 'au'],
+                          'BRL': 	['Brazilian real', 'br'],
+                          'CAD': 	['Canadian dollar', 'ca'],
+                          'CNY' :  ['Chinese yuan renminbi', 'cn'],
+                          'HKD'  : ['Hong Kong dollar', 'hk'],
+                          'IDR'  : ['Indonesian rupiah', 'id'],
+                          'ILS' :	['Israeli shekel', 'il'],
+                          'INR' :	['Indian rupee', 'in'],
+                          'KRW' :['South Korean won', 'kr'],
+                          'MXN' :	['Mexican peso', 'mx'],
+                          'MYR' :	['Malaysian ringgit','my'],
+                          'NZD' :	['New Zealand dollar', 'nz'],
+                          'PHP' :	['Philippine peso', 'ph'],
+                          'SGD' :	['Singapore dollar', 'sg'],
+                          'THB' :	['Thai baht', 'th'],
+                          'ZAR': 	['South African rand', 'za']
  }; 
-
 
  
   // Public methods
@@ -151,8 +151,8 @@ export const ItemCtrl =  (function(){
       }
 
       await this.setDataExchangeRates(exchangeRates);
-      
-      
+            
+      this.setExchangeRateLastUpdate(new Date().toLocaleString());
     },
 
     setDataExchangeRates: function(exchangeRates){
@@ -161,6 +161,14 @@ export const ItemCtrl =  (function(){
 
     getDataExchangeRates: function(){
       return data.exchangeRates;
+    },
+
+    setExchangeRateLastUpdate: function(date){
+      data.exchangeRateLastUpdate = date;
+    },
+
+    getExchangeRateLastUpdate: function(){
+      return data.exchangeRateLastUpdate;
     },
 
     exchangeMoney: function(currency, amount){

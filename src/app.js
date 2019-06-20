@@ -1,6 +1,7 @@
 import {ItemCtrl} from './item';
 import {UICtrl} from './ui';
 import {StorageCtrl} from './storage';
+require ('flag-icon-css/css/flag-icon.css');
 require('./scss/style.scss');
 
 
@@ -13,6 +14,14 @@ const App = (function(ItemCtrl, UICtrl, StorageCtrl){
 
   // Load event listeners
   const loadEventListeners = function(){
+    
+    // initialize materialize.css dropdown select
+    document.addEventListener('DOMContentLoaded', function() {
+     
+      var elems = document.querySelectorAll('select');
+      var instances = M.FormSelect.init(elems);
+     
+    });
     
     // key up in currency input
     document.querySelectorAll(UISelectors.currencyInput).forEach(input => {
@@ -59,7 +68,7 @@ const App = (function(ItemCtrl, UICtrl, StorageCtrl){
       } else   {
         // get currency abbreviation
         input.currency = input.currency.split(" ")[0]; 
-
+        
         // check if input.currency already in list -> if yes update it instead of creating new item
         const dataItems = ItemCtrl.getDataItems();
         
@@ -184,16 +193,16 @@ const App = (function(ItemCtrl, UICtrl, StorageCtrl){
   function getCurrencyInput(e){
    // Get targeted list 
     let targetedList;
-
+    
     // Check what element targeted to traverse DOM accordingly 
     if (e.target.matches('.small')){
       targetedList = e.target.parentElement.parentElement;
       
       if (targetedList.matches('.base')){
         // set base currency
-        document.querySelector(UISelectors.baseCurrencyInput).value = e.target.parentElement.innerText;
+        document.querySelector(UISelectors.baseCurrencyInput).value = e.target.parentElement.innerHTML;
         
-        ItemCtrl.setBaseCurrency(e.target.parentElement.innerText.split(" ")[0]);
+        ItemCtrl.setBaseCurrency(e.target.parentElement.innerText.trim().split(" ")[0]);
 
       } else {
         // set item currency
@@ -207,7 +216,7 @@ const App = (function(ItemCtrl, UICtrl, StorageCtrl){
         // set base currency
         document.querySelector(UISelectors.baseCurrencyInput).value = e.target.innerText;
 
-        ItemCtrl.setBaseCurrency(e.target.innerText.split(" ")[0]);
+        ItemCtrl.setBaseCurrency(e.target.innerText.trim().split(" ")[0]);
 
       } else {
         // set item currency

@@ -32,7 +32,8 @@ export const UICtrl= (function(){
 
     // get user input
     getItemInput: function(){
-      const currency = document.querySelector(UISelectors.itemCurrencyInput).value;
+      const currency = document.querySelector(UISelectors.itemCurrencyInput).value.trim();
+      console.log(currency);
       const amount =  document.querySelector(UISelectors.itemAmountInput).value;
       
       return {
@@ -162,8 +163,11 @@ export const UICtrl= (function(){
       // filter currency list with user input
       for (const [k, v] of Object.entries(availableCurrency)){
                 
-        if(v.toLowerCase().includes(currencyInput.toLowerCase())|| k.toLowerCase().includes(currencyInput.toLowerCase())){
-          ulHtml += `<li class="collection-item">${k} <span class="small">${v}</span></li>`;
+        if(v[0].toLowerCase().includes(currencyInput.toLowerCase())|| k.toLowerCase().includes(currencyInput.toLowerCase())){
+          ulHtml += `<li class="collection-item">
+            <span class="flag-icon flag-icon-${v[1]}"></span>
+            ${k} 
+            <span class="small">${v[0]}</span></li>`;
         }
       }
       currencyList.innerHTML = ulHtml;
@@ -237,7 +241,7 @@ export const UICtrl= (function(){
       if(list.children.length === 0){
         list.style.border = "none";
       } else {
-        list.style.border = "1px solid #e0e0e0";
+        //list.style.border = "1px solid #e0e0e0";
       }
     },
 
@@ -249,10 +253,11 @@ export const UICtrl= (function(){
       
       for (let [k, v] of Object.entries(currencyList)){
         if (k === currencyAbrr){
-          currencyFullName = v;
+          currencyFullName = v[0];
           break;
         }
       }
+      
       return currencyFullName;
     },
 
