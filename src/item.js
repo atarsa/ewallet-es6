@@ -212,8 +212,22 @@ export const ItemCtrl =  (function(){
       data.currentItem = item;
     },
 
-    getCurrentItem:function(){
+    getCurrentItem: function(){
       return data.currentItem;
+    },
+
+    // validate currency
+    isCurrencyValid: function(currency){
+      let found = false;
+      // split currency string to currency array
+      currency = currency.split(" ");
+      for (let [k,v] of Object.entries(currenciesList)){
+        if(k == currency[0] || v[0] == currency[1]){
+          found = true;
+          break
+        } 
+      }
+      return found;
     },
 
     dataLog: function(){

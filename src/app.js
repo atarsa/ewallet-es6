@@ -66,43 +66,50 @@ const App = (function(ItemCtrl, UICtrl, StorageCtrl){
         UICtrl.showAlert("Amount must be positive.");
         
       } else   {
-        // get currency abbreviation
+        // validate currencyInput
+        console.log(input.currency)
+        if (ItemCtrl.isCurrencyValid(input.currency)){
+          // get currency abbreviation
         input.currency = input.currency.split(" ")[0]; 
         
         // check if input.currency already in list -> if yes update it instead of creating new item
         const dataItems = ItemCtrl.getDataItems();
         
 
-        // list clear, add item to the list
-        if (dataItems.length === 0){
-          let newItem = ItemCtrl.addItem(input.currency, input.amount);
-          UICtrl.addListItem(newItem);
-
-        } else {
-          
-          // check if currency already in the list
-          let found =  dataItems.find(function(element) {
-
-            return element.currency === input.currency;
-          })
-          
-          if (found){
-            // Update list item
-            found.amount += Number.parseInt(input.amount);
-            UICtrl.updateListItem(found);
-                      
-          } else {
-            // Add new item
+          // list clear, add item to the list
+          if (dataItems.length === 0){
             let newItem = ItemCtrl.addItem(input.currency, input.amount);
-            
             UICtrl.addListItem(newItem);
-          }
+
+          } else {
             
+            // check if currency already in the list
+            let found =  dataItems.find(function(element) {
+
+              return element.currency === input.currency;
+            })
+            
+            if (found){
+              // Update list item
+              found.amount += Number.parseInt(input.amount);
+              UICtrl.updateListItem(found);
+                        
+            } else {
+              // Add new item
+              let newItem = ItemCtrl.addItem(input.currency, input.amount);
+              
+              UICtrl.addListItem(newItem);
+            }
+
+          }
+         
+        } else {
+          // show message that no such currency
+          UICtrl.showAlert(`"${input.currency}" is not a valid currency.`);
         }
         // Clear input
         UICtrl.clearUserInput();
-        
-      
+            
       }
     } else{
       // show message that no input
