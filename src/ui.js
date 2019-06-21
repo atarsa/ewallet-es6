@@ -9,6 +9,11 @@ export const UICtrl= (function(){
     itemAmountInput: '#item-amount',
     itemsList: '#items-list',
     listItems: '#items-list li',
+    // rates list
+    ratesList: '.collection--rates',
+    ratesBaseCurrency: '.card--rates .base-currency',
+    ratesLastUpdated: '.card--rates .update-time',
+    // currency list
     currencyListItem: '.currency-list.item',
     currencyListBase: '.currency-list.base',
     currencyList: '.currency-list',
@@ -33,7 +38,6 @@ export const UICtrl= (function(){
     // get user input
     getItemInput: function(){
       const currency = document.querySelector(UISelectors.itemCurrencyInput).value.trim();
-      console.log(currency);
       const amount =  document.querySelector(UISelectors.itemAmountInput).value;
       
       return {
@@ -58,10 +62,10 @@ export const UICtrl= (function(){
       // Add html
       li.innerHTML = `
         <a href="#" class="delete">
-          <i class="delete-item fas fa-trash-alt"></i>
+          <span class="delete-item fas fa-trash-alt"></span>
         </a>
         <a href="#" class="update">
-          <i class="edit-item fas fa-edit"></i>
+          <span class="edit-item fas fa-edit"></span>
         </a>
         
         <span class="amount">${item.amount}</span>
@@ -78,9 +82,6 @@ export const UICtrl= (function(){
       // Update total money
       this.updateTotalMoney();
 
-      // check if items list previously empty
-      // if so, show border
-      this.toggleItemsListBorder();
     },
 
     updateListItem: function(item){
@@ -89,10 +90,10 @@ export const UICtrl= (function(){
 
       document.querySelector(`[data-id="${item.id}"]`).innerHTML = `
       <a href="#" class="delete">
-        <i class="delete-item fas fa-trash-alt"></i>
+        <span class="delete-item fas fa-trash-alt"></span>
       </a>
       <a href="#" class="update">
-        <i class="edit-item fas fa-edit"></i>
+        <span class="edit-item fas fa-edit"></span>
       </a>
       <span class="amount">${item.amount}</span>
       <span class="currency">${item.currency}</span>
@@ -130,6 +131,27 @@ export const UICtrl= (function(){
       document.querySelector(UISelectors.totalAmount).innerHTML = total.toFixed(2);
       document.querySelector(UISelectors.totalCurrency).innerHTML = baseCurrency;
    
+    },
+
+    // Populate Today's rates list with latest currency exchange rates
+    populateTodaysRates: function(){
+      const exchangedRates = ItemCtrl.getDataExchangeRates();
+      // needed to have country code
+      const currenciesAvailable = ItemCtrl.getAvaliableCurrencies();
+      const todaysRatesList = ItemCtrl.getTodaysRatesList();
+      let ratesList = document.querySelector(UISelectors.ratesList);
+      ratesList.innerHTML = "";
+
+      todaysRatesList.forEach(currency => {
+        ratesList.innerHTML += `
+          <li class="collection-item">
+            <span class="flag-icon flag-icon-${currenciesAvailable[currency][1]}"></span>
+            <span class="left-align"> ${currency} </span>
+            <span class="right">${exchangedRates[currency].toFixed(3)}</span>
+          </li>
+          `
+      })
+            
     },
 
     // Show available currencies list
@@ -178,10 +200,7 @@ export const UICtrl= (function(){
         
         document.querySelector(`[data-id="${id}"]`).remove();
         this.updateTotalMoney();
-
-        // check if any any items left on the list
-        // if so hide border
-        this.toggleItemsListBorder();
+       
     },   
 
     addItemToForm: function(){
@@ -230,21 +249,28 @@ export const UICtrl= (function(){
       document.querySelector(UISelectors.backBtn).style.display = "inline";
     },
 
-   
-    // Show/ hide border 
-    toggleItemsListBorder: function(){
-
-      const list = document.querySelector(UISelectors.itemsList);
-      
-      // if list empty set border
-      // otherwise remove border
-      if(list.children.length === 0){
-        list.style.border = "none";
-      } else {
-        //list.style.border = "1px solid #e0e0e0";
-      }
+   // Update UI
+    updateUI: function(){
+      this.populateItemsList();
+      this.updateTotalMoney();
+      this.populateTodaysRates();
+      this.updateBaseCurrencyInTodaysRates();
+      this.updateExchangeTime();
     },
 
+    updateBaseCurrencyInTodaysRates: function(){
+      const baseCurrency = ItemCtrl.getBaseCurrency();
+      
+      document.querySelector(UISelectors.ratesBaseCurrency).innerHTML = `
+      1 ${baseCurrency} =`;
+
+    },
+
+    updateExchangeTime: function(){
+      const updateTime = ItemCtrl.getExchangeRateLastUpdate();
+      document.querySelector(UISelectors.ratesLastUpdated).innerHTML = updateTime;
+    },
+    
     getCurrencyFullName: function(currencyAbrr){
       // iterate through available currencies
       // to get full currency name

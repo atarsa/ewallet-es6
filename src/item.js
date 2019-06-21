@@ -15,7 +15,8 @@ export const ItemCtrl =  (function(){
     currentItem: null,
     baseCurrency: StorageCtrl.getBaseCurrencyFromStorage(),
     exchangeRates: {},
-    exchangeRateLastUpdate: null
+    exchangeRateLastUpdate: null,
+    todaysRatesList: []
   }
 
   // Available currencies with full names and country code
@@ -122,8 +123,12 @@ export const ItemCtrl =  (function(){
       // update items list with new conversion rate
       this.fetchCurrencyRates(currency)
         .then(() =>{
-        UICtrl.populateItemsList();
-        UICtrl.updateTotalMoney();
+          
+        //UICtrl.populateItemsList();
+        //UICtrl.updateTotalMoney();
+        this.setTodaysRatesList();
+        UICtrl.updateUI();
+        //UICtrl.populateTodaysRates();
       })
         .catch(err => console.log(err));
       
@@ -133,6 +138,36 @@ export const ItemCtrl =  (function(){
       return data.baseCurrency;
     },
 
+    // Today's rates list
+    getTodaysRatesList: function(){
+      return data.todaysRatesList;
+    },
+
+    setTodaysRatesList: function(){
+      
+      // depending on base currency show different set of todays rates
+      switch(data.baseCurrency){
+        case 'GBP':
+          data.todaysRatesList = ["USD", "EUR", "CAD", "AUD", "PLN"];
+          break;
+        case 'USD':
+          data.todaysRatesList = ["GBP", "EUR", "CAD", "AUD", "PLN"];
+          break;
+        case 'EUR':
+            data.todaysRatesList = ["GBP", "USD", "CAD", "AUD", "PLN"];
+            break;
+        case 'CAD':
+          data.todaysRatesList = ["GBP", "EUR", "USD", "AUD", "PLN"];
+          break;
+        case 'AUD':
+          data.todaysRatesList = ["GBP", "EUR", "CAD", "USD", "PLN"];
+          break;
+        default:
+          data.todaysRatesList = ["USD", "GBP", "EUR", "CAD", "AUD"];
+          
+      }
+      
+    },
     getAvaliableCurrencies: function(){
       return currenciesList;
 
