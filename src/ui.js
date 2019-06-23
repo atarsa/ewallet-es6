@@ -21,7 +21,10 @@ export const UICtrl= (function(){
     //currencyListBase: '.currency-list.base',
     currencyList: '.currency-list',
     convertedAmount: '.converted-amount',
+    // wallet message 
+    walletMessage: '.wallet .message',
     // total
+    totalSummary: '.total',
     totalAmount: 'h4 .total-money',
     totalCurrency: 'h4 .base-currency',
     // buttons
@@ -82,6 +85,7 @@ export const UICtrl= (function(){
       // Insert item
       document.querySelector(UISelectors.itemsList).insertAdjacentElement('beforeend', li);
 
+      this.checkForListItems();
       // Update total money
       this.updateTotalMoney();
 
@@ -237,6 +241,7 @@ export const UICtrl= (function(){
     // Clear items list
     clearItemsList: function(){
       document.querySelector(UISelectors.itemsList).innerHTML = '';
+      this.checkForListItems();
     },
 
     // Deafult state
@@ -260,6 +265,7 @@ export const UICtrl= (function(){
    // Update UI
     updateUI: function(){
       this.populateItemsList();
+      this.checkForListItems();
       this.updateTotalMoney();
       this.populateTodaysRates();
       this.updateBaseCurrencyInTodaysRates();
@@ -279,6 +285,26 @@ export const UICtrl= (function(){
       document.querySelector(UISelectors.ratesLastUpdated).innerHTML = updateTime;
     },
     
+    // check if any items in the items list 
+    checkForListItems: function(){
+      const itemsList = document.querySelector(UISelectors.itemsList);
+      const totalSummary = document.querySelector(UISelectors.totalSummary);
+      const walletMessage = document.querySelector(UISelectors.walletMessage);
+
+      // if no items in the list
+      if(itemsList.childNodes.length === 0){
+        // hide "total", show message
+        totalSummary.style.display = "none";
+        walletMessage.style.display = "block";
+      } else {
+        // show "total", hide message
+        totalSummary.style.display = "block";
+        walletMessage.style.display = "none";
+        
+      }
+      
+    },
+
     getCurrencyFullName: function(currencyAbrr){
       // iterate through available currencies
       // to get full currency name
