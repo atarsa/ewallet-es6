@@ -4,7 +4,9 @@ import { ItemCtrl } from "./item";
 export const UICtrl= (function(){
   const UISelectors = {
     itemCurrencyInput: '#item-currency',
-    baseCurrencyInput: '#base-currency',
+    //baseCurrencyInput: '#base-currency',
+    baseCurrencyBtn: '.btn--base-currency',
+    baseCurrencyList: '#base-currency-list',
     currencyInput: '.currency-input',
     itemAmountInput: '#item-amount',
     itemsList: '#items-list',
@@ -152,6 +154,21 @@ export const UICtrl= (function(){
           `
       })
             
+    },
+
+    // Update base currency button inner HTML with new currency and its flag
+    updateBaseCurrencyBtn: function(baseCurrency){
+      // get List of available currencies to get country code
+      const currenciesAvailable = ItemCtrl.getAvaliableCurrencies();
+      
+      let baseCurrencyBtn = document.querySelector(UISelectors.baseCurrencyBtn);
+
+      baseCurrencyBtn.innerHTML = `
+      <span class="flag-icon flag-icon-${currenciesAvailable[baseCurrency][1]}"></span>
+      ${baseCurrency} <span class="fas fa-chevron-down"></span>
+      `;
+
+
     },
 
     // Show available currencies list

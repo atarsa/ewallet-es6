@@ -1,5 +1,44 @@
-body {
-  //background-image: url("./../images/white-waves.png");
+// body {
+//   background-image: url("./../../images/white-waves.png");
+// }
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown--content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  left: -100px;
+  min-width: 400px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+
+  & a {
+    color: black;
+    text-decoration: none;
+    display: inline-block;
+
+    &:focus {
+      background-color: #4caf50;
+    }
+  }
+}
+
+/* Change color of dropdown links on hover */
+.dropdown--content a:hover {
+  background-color: #ddd;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown--content {
+  display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+  background-color: #3e8e41;
 }
 
 /*  === Currency list additional styles === */

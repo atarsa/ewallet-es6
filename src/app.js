@@ -18,8 +18,8 @@ const App = (function(ItemCtrl, UICtrl, StorageCtrl){
     // initialize materialize.css dropdown select
     document.addEventListener('DOMContentLoaded', function() {
      
-      var elems = document.querySelectorAll('select');
-      var instances = M.FormSelect.init(elems);
+      var elems = document.querySelectorAll('.dropdown-trigger');
+      var instances = M.Dropdown.init(elems);
      
     });
     
@@ -33,6 +33,8 @@ const App = (function(ItemCtrl, UICtrl, StorageCtrl){
       list.addEventListener('click', getCurrencyInput)
     })
 
+    // click on base currency list 
+    document.querySelector(UISelectors.baseCurrencyList).addEventListener("click", pickBaseCurrency);
     // Add item submit event 
     document.querySelector(UISelectors.addBtn).addEventListener('click', itemAddSubmit);
 
@@ -53,6 +55,21 @@ const App = (function(ItemCtrl, UICtrl, StorageCtrl){
   
   }
 
+  // Change base currency on item click
+  function pickBaseCurrency(e){
+    let baseCurrency;
+    // if click on flag
+    if (e.target.matches('.flag-icon')){
+      baseCurrency = e.target.parentElement.dataset.currency;
+    } else {
+      baseCurrency = e.target.dataset.currency;
+    }
+    ItemCtrl.setBaseCurrency(baseCurrency);
+    // update base currency button with new base currency and country flag
+    UICtrl.updateBaseCurrencyBtn(baseCurrency);
+    
+  }
+
   function itemAddSubmit(e){
     // Get form input from UI Controller
     const input = UICtrl.getItemInput();
@@ -67,7 +84,6 @@ const App = (function(ItemCtrl, UICtrl, StorageCtrl){
         
       } else   {
         // validate currencyInput
-        console.log(input.currency)
         if (ItemCtrl.isCurrencyValid(input.currency)){
           // get currency abbreviation
         input.currency = input.currency.split(" ")[0]; 
@@ -193,7 +209,7 @@ const App = (function(ItemCtrl, UICtrl, StorageCtrl){
       UICtrl.clearItemsList();
       UICtrl.updateTotalMoney();
       // hide items list as none items left
-      UICtrl.toggleItemsListBorder();
+      //UICtrl.toggleItemsListBorder();
     }
   }
 
@@ -207,9 +223,10 @@ const App = (function(ItemCtrl, UICtrl, StorageCtrl){
       
       if (targetedList.matches('.base')){
         // set base currency
-        document.querySelector(UISelectors.baseCurrencyInput).value = e.target.parentElement.innerHTML;
+        document.querySelector(UISelectors.baseCurrencyInput).value = e.target.parentElement.innerText;
         
         ItemCtrl.setBaseCurrency(e.target.parentElement.innerText.trim().split(" ")[0]);
+        //UICtrl.populateTodaysRates();
 
       } else {
         // set item currency
@@ -244,18 +261,16 @@ const App = (function(ItemCtrl, UICtrl, StorageCtrl){
       UICtrl.setDefaultState();
       
       const baseCurrency = ItemCtrl.getBaseCurrency();
+      UICtrl.updateBaseCurrencyBtn(baseCurrency);
       const currencyFullName = UICtrl.getCurrencyFullName(baseCurrency);
-
-      document.querySelector(UISelectors.baseCurrencyInput).value = `${baseCurrency} ${currencyFullName}`;
+      // set today's rates currency list
+      ItemCtrl.setTodaysRatesList();
+      // document.querySelector(UISelectors.baseCurrencyInput).value = `${baseCurrency} ${currencyFullName}`;
       
       ItemCtrl.fetchCurrencyRates(baseCurrency).then(() => {
 
-        // Populate list with items
-        UICtrl.populateItemsList();
-        // Get converted total money
-        UICtrl.updateTotalMoney();
-        // hide border if no items in the list
-        UICtrl.toggleItemsListBorder();
+        UICtrl.updateUI();
+        
       });
 
       // Load event listeners
@@ -267,4 +282,4 @@ const App = (function(ItemCtrl, UICtrl, StorageCtrl){
 
 // Initialise App
 App.init();
-//ItemCtrl.dataLog();
+// ItemCtrl.dataLog();

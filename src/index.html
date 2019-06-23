@@ -18,21 +18,98 @@
       <div class="container">
         <a href="#" class="brand-logo left grey-text ">Currency Converter eWallet</a>
         <ul class="right">
-          <li>
-            <a href="#" class=" btn light-green lighten-3">GBP</a>
+          <li class="dropdown">
+            <a href="#" class="btn btn--base-currency btn--drop">
+            </a>
+            <div id="base-currency-list" class="dropdown--content">
+
+              <a href="#" class="" data-currency="GBP"><span class="flag-icon flag-icon-gb"></span> GBP </a>
+
+              <a href="#" class="" data-currency="EUR"><span class="flag-icon flag-icon-eu"></span> EUR </a>
+
+              <a href="#" class="" data-currency="USD"><span class="flag-icon flag-icon-us"></span> USD </a>
+
+              <a href="#" class="" data-currency="AUD"><span class="flag-icon flag-icon-au"></span> AUD </a>
+
+              <a href="#" class="" data-currency="CAD"><span class="flag-icon flag-icon-ca"></span> CAD </a>
+
+              <a href="#" class="" data-currency="PLN"><span class="flag-icon flag-icon-pl"></span> PLN </a>
+
+              <a href="#" class="" data-currency="NOK"><span class="flag-icon flag-icon-no"></span> NOK </a>
+
+              <a href="#" class="" data-currency="HRK"><span class="flag-icon flag-icon-hr"></span> HRK </a>
+
+              <a href="#" class="" data-currency="ISK"><span class="flag-icon flag-icon-is"></span> ISK </a>
+
+              <a href="#" class="" data-currency="CHF"><span class="flag-icon flag-icon-ch"></span> CHF </a>
+
+              <a href="#" class="" data-currency="SEK"><span class="flag-icon flag-icon-se"></span> SEK </a>
+
+              <a href="#" class="" data-currency="JPY"><span class="flag-icon flag-icon-jp"></span> JPY </a>
+
+              <a href="#" class="" data-currency="BGN"><span class="flag-icon flag-icon-bg"></span> BGN</a>
+
+              <a href="#" class="" data-currency="CZK"><span class="flag-icon flag-icon-cz"></span> CZK </a>
+
+              <a href="#" class="" data-currency="DKK"><span class="flag-icon flag-icon-dk"></span> DKK </a>
+
+              <a href="#" class="" data-currency="HUF"><span class="flag-icon flag-icon-hu"></span> HUF </a>
+
+              <a href="#" class="" data-currency="RON"><span class="flag-icon flag-icon-ro"></span> RON </a>
+
+              <a href="#" class="" data-currency="RUB"><span class="flag-icon flag-icon-ru"></span> RUB </a>
+
+              <a href="#" class="" data-currency="TRY"><span class="flag-icon flag-icon-tr"></span> TRY </a>
+
+              <a href="#" class="" data-currency="BRL"><span class="flag-icon flag-icon-br"></span> BRL </a>
+
+              <a href="#" class="" data-currency="CNY"><span class="flag-icon flag-icon-cn"></span> CNY </a>
+
+              <a href="#" class="" data-currency="HKD"><span class="flag-icon flag-icon-hk"></span> HKD </a>
+
+              <a href="#" class="" data-currency="IDR"><span class="flag-icon flag-icon-id"></span> IDR </a>
+
+              <a href="#" class="" data-currency="ILS"><span class="flag-icon flag-icon-il"></span> ILS </a>
+
+              <a href="#" class="" data-currency="INR"><span class="flag-icon flag-icon-in"></span> INR </a>
+
+              <a href="#" class="" data-currency="KRW"><span class="flag-icon flag-icon-kr"></span> KRW </a>
+
+              <a href="#" class="" data-currency="MXN"><span class="flag-icon flag-icon-mx"></span> MXN </a>
+
+              <a href="#" class="" data-currency="MYR"><span class="flag-icon flag-icon-my"></span> MYR </a>
+
+              <a href="#" class="" data-currency="NZD"><span class="flag-icon flag-icon-nz"></span> NZD </a>
+
+              <a href="#" class="" data-currency="PHP"><span class="flag-icon flag-icon-ph"></span> PHP </a>
+
+              <a href="#" class="" data-currency="SGD"><span class="flag-icon flag-icon-sg"></span> SGD </a>
+
+              <a href="#" class="" data-currency="THB"><span class="flag-icon flag-icon-th"></span> THB </a>
+
+              <a href="#" class="" data-currency="ZAR"><span class="flag-icon flag-icon-za"></span> ZAR </a>
+
+            </div>
+
+
           </li>
           <li>
             <a href="#" class="clear-btn btn light-green lighten-3">Clear All</a>
           </li>
         </ul>
+
+
+
       </div>
+
     </div>
+
   </nav>
 
   <br>
   <div class="container">
 
-    <div class="card">
+    <!-- <div class="card">
       <div class="card-content">
         <div class="row">
           <h5 class="col s6">Base Currency:</h5>
@@ -44,7 +121,7 @@
 
         </div>
       </div>
-    </div>
+    </div> -->
 
     <div class="row">
 
@@ -84,10 +161,11 @@
               <div class="col right">
                 <br>
 
-                <button class="add-btn btn light-green  darken-1 "><i class="fas fa-plus"></i> Add Money</button>
+                <button class="add-btn btn light-green  darken-1 "><span class="fas fa-plus"></span> Add Money</button>
                 <div class="right">
-                  <button class="update-btn btn orange lighten-1 "><i class="fas fa-edit"></i> Update Amount</button>
-                  <button class="back-btn btn grey lighten-1 "><i class="fas fa-chevron-circle-left "></i>
+                  <button class="update-btn btn orange lighten-1 "><span class="fas fa-edit"></span> Update
+                    Amount</button>
+                  <button class="back-btn btn grey lighten-1 "><span class="fas fa-chevron-left "></span>
                     Back</button>
                 </div>
               </div>
@@ -98,28 +176,31 @@
 
       <!-- today's rates card -->
       <div class="col s12 m4">
-        <div class="card">
-          <span class="card-title">Today's rates:</span>
+        <div class="card card--rates">
           <div class="card-content">
-            <ul class="collection">
-              <li class="collection-item">
-                <span class="flag-icon flag-icon-gb"></span> GBP 1.0923
-              </li>
-              <li class="collection-item">
-                GBP 1.0923
-              </li>
-              <li class="collection-item">
-                GBP 1.0923
-              </li>
-              <li class="collection-item">
-                GBP 1.0923
-              </li>
-              <li class="collection-item">
-                GBP 1.0923
-              </li>
+            <div>
+              <span class="">Today's rates*:<span class="right base-currency"></span></span>
+
+
+            </div>
+
+            <br>
+
+            <ul class="collection collection--rates">
             </ul>
-            <button class="btn blue">Check Rates</button>
+
+            <a class="btn blue"
+              href="https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html">
+              Check Rates <span class="fas fa-chevron-right"></span></a>
+
+            <div>
+              <small>*Last updated: <span class="update-time">20/06/19 18:48:30</span></small>
+            </div>
+
           </div> <!-- end of .card-content -->
+          <!-- <div class="card-action">
+            
+          </div> -->
         </div> <!-- end of .card -->
       </div> <!-- end of .col -->
 
