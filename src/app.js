@@ -24,17 +24,15 @@ const App = (function(ItemCtrl, UICtrl, StorageCtrl){
     });
     
     // key up in currency input
-    document.querySelectorAll(UISelectors.currencyInput).forEach(input => {
-      input.addEventListener('keyup', UICtrl.showCurrencyList);
-    })
+    document.querySelector(UISelectors.itemCurrencyInput).addEventListener('keyup', UICtrl.showCurrencyList);
+    
    
     // click on currency list item
-    document.querySelectorAll(UISelectors.currencyList).forEach(list => {
-      list.addEventListener('click', getCurrencyInput)
-    })
-
-    // click on base currency list 
+    document.querySelector(UISelectors.currencyList).addEventListener('click', getCurrencyInput);
+    
+    // click on base currency dropdown list 
     document.querySelector(UISelectors.baseCurrencyList).addEventListener("click", pickBaseCurrency);
+    
     // Add item submit event 
     document.querySelector(UISelectors.addBtn).addEventListener('click', itemAddSubmit);
 
@@ -58,7 +56,7 @@ const App = (function(ItemCtrl, UICtrl, StorageCtrl){
   // Change base currency on item click
   function pickBaseCurrency(e){
     let baseCurrency;
-    // if click on flag
+    // if "click" on flag
     if (e.target.matches('.flag-icon')){
       baseCurrency = e.target.parentElement.dataset.currency;
     } else {
@@ -208,8 +206,7 @@ const App = (function(ItemCtrl, UICtrl, StorageCtrl){
       UICtrl.clearUserInput();
       UICtrl.clearItemsList();
       UICtrl.updateTotalMoney();
-      // hide items list as none items left
-      //UICtrl.toggleItemsListBorder();
+      
     }
   }
 
@@ -220,33 +217,17 @@ const App = (function(ItemCtrl, UICtrl, StorageCtrl){
     // Check what element targeted to traverse DOM accordingly 
     if (e.target.matches('.small')){
       targetedList = e.target.parentElement.parentElement;
-      
-      if (targetedList.matches('.base')){
-        // set base currency
-        document.querySelector(UISelectors.baseCurrencyInput).value = e.target.parentElement.innerText;
+            
+      // set item currency
+      document.querySelector(UISelectors.itemCurrencyInput).value = e.target.parentElement.innerText;
         
-        ItemCtrl.setBaseCurrency(e.target.parentElement.innerText.trim().split(" ")[0]);
-        //UICtrl.populateTodaysRates();
-
-      } else {
-        // set item currency
-        document.querySelector(UISelectors.itemCurrencyInput).value = e.target.parentElement.innerText;
-        
-      }
+     
     } else {
       targetedList = e.target.parentElement;
-      
-      if (targetedList.matches('.base')){
-        // set base currency
-        document.querySelector(UISelectors.baseCurrencyInput).value = e.target.innerText;
-
-        ItemCtrl.setBaseCurrency(e.target.innerText.trim().split(" ")[0]);
-
-      } else {
-        // set item currency
-        document.querySelector(UISelectors.itemCurrencyInput).value = e.target.innerText;
-      }
-    
+            
+      // set item currency
+      document.querySelector(UISelectors.itemCurrencyInput).value = e.target.innerText;
+          
     }
     targetedList.innerHTML = '';
     
@@ -262,11 +243,11 @@ const App = (function(ItemCtrl, UICtrl, StorageCtrl){
       
       const baseCurrency = ItemCtrl.getBaseCurrency();
       UICtrl.updateBaseCurrencyBtn(baseCurrency);
-      const currencyFullName = UICtrl.getCurrencyFullName(baseCurrency);
+      
       // set today's rates currency list
       ItemCtrl.setTodaysRatesList();
-      // document.querySelector(UISelectors.baseCurrencyInput).value = `${baseCurrency} ${currencyFullName}`;
       
+      // fetch exchange rates and update UI
       ItemCtrl.fetchCurrencyRates(baseCurrency).then(() => {
 
         UICtrl.updateUI();

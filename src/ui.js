@@ -3,21 +3,22 @@ import { ItemCtrl } from "./item";
 // UI controller
 export const UICtrl= (function(){
   const UISelectors = {
-    itemCurrencyInput: '#item-currency',
-    //baseCurrencyInput: '#base-currency',
+    // base currency
     baseCurrencyBtn: '.btn--base-currency',
     baseCurrencyList: '#base-currency-list',
-    currencyInput: '.currency-input',
+    // item user input
+    itemCurrencyInput: '#item-currency',
     itemAmountInput: '#item-amount',
+    // items list
     itemsList: '#items-list',
-    listItems: '#items-list li',
+    //listItems: '#items-list li',
     // rates list
     ratesList: '.collection--rates',
     ratesBaseCurrency: '.card--rates .base-currency',
     ratesLastUpdated: '.card--rates .update-time',
     // currency list
     currencyListItem: '.currency-list.item',
-    currencyListBase: '.currency-list.base',
+    //currencyListBase: '.currency-list.base',
     currencyList: '.currency-list',
     convertedAmount: '.converted-amount',
     // total
@@ -178,25 +179,15 @@ export const UICtrl= (function(){
       let currencyList;
       let currencyInput;
 
-      // Check which list 
-      if (e.target.matches('.base')){
-        // Get base currency list
-        currencyList = document.querySelector(UISelectors.currencyListBase);
-        // Get base currency user input
-        currencyInput = document.querySelector(UISelectors.baseCurrencyInput).value;
-
-      } else {
-        // Get item currency list
-        currencyList = document.querySelector(UISelectors.currencyListItem);
+      // Get item currency list
+      currencyList = document.querySelector(UISelectors.currencyListItem);
         // Get item currency user input
-        currencyInput = document.querySelector(UISelectors.itemCurrencyInput).value;
+      currencyInput = document.querySelector(UISelectors.itemCurrencyInput).value;
 
-      }
-            
+                  
       // clear list on each key up
       currencyList.innerHTML = '';
       
-
       let ulHtml = '';
 
       // filter currency list with user input
