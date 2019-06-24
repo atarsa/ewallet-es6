@@ -14,12 +14,12 @@
 
 <body>
   <nav>
-    <div class="nav-wrapper grey lighten-3">
+    <div class="nav-wrapper ">
       <div class="container">
-        <a href="#" class="brand-logo left grey-text ">Currency Converter eWallet</a>
+        <a href="#" class="brand-logo left "> eWallet</a>
         <ul class="right">
           <li class="dropdown">
-            <a href="#" class="btn btn--base-currency btn--drop">
+            <a href="#" class="btn btn--base-currency btn--drop indigo darken-3">
             </a>
             <div id="base-currency-list" class="dropdown--content">
 
@@ -94,42 +94,42 @@
 
           </li>
           <li>
-            <a href="#" class="clear-btn btn light-green lighten-3">Clear All</a>
+            <a href="#" class="clear-btn btn indigo lighten-1">Clear All</a>
           </li>
         </ul>
 
-
-
       </div>
-
     </div>
-
   </nav>
 
   <br>
   <div class="container">
 
-    <!-- <div class="card">
-      <div class="card-content">
-        <div class="row">
-          <h5 class="col s6">Base Currency:</h5>
-
-          <input type="text" id="base-currency" class="input-field col s6 currency-input base"
-            placeholder="Choose base currency">
-
-          <ul class="currency-list base collection col s6"></ul>
-
-        </div>
-      </div>
-    </div> -->
-
+    <div>
+      <h5>Multi-currency eWallet</h5>
+      <p>
+        Multi-currency eWallet is a tool that allows you to calculate total value of a eWallet based on current exchange
+        rates published daily by <a
+          href="https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html">European
+          Central Bank</a>.
+      </p>
+      <p>
+        Simply select one of the 33 avaliable foreign currencies and we'll convert it and add it to your eWallet.
+        <br>
+        You can always change your base currency - we'll update your eWallet automatically!
+      </p>
+    </div>
     <div class="row">
 
       <!-- currency converter card -->
-      <div class="col s12 m8">
+      <div class="col m7 s12">
         <div class="card">
-          <div class="card-content">
+          <div class="card__header">
             <span class="card-title">Add to Wallet:</span>
+          </div>
+          <div class="card-content">
+            <br>
+            <br>
             <div class="row">
               <div class="col s4">
                 <div class="input-field ">
@@ -148,20 +148,16 @@
                 </div>
               </div>
             </div>
+            <br>
+            <br>
           </div> <!-- end of .card-content -->
 
           <div class="card-action">
             <div class="row">
-              <!-- <div class="col s6">
-                <p>Your Rate:</p>
-                <div>GBP 1 = EUR 1.0895</div>
-                <small>Last updated 2019 June 19 12:04</small>
-              </div> -->
 
               <div class="col right">
-                <br>
 
-                <button class="add-btn btn light-green  darken-1 "><span class="fas fa-plus"></span> Add Money</button>
+                <button class="add-btn btn "><span class="fas fa-plus"></span> Add Money</button>
                 <div class="right">
                   <button class="update-btn btn orange lighten-1 "><span class="fas fa-edit"></span> Update
                     Amount</button>
@@ -175,32 +171,27 @@
       </div> <!-- end of .col -->
 
       <!-- today's rates card -->
-      <div class="col s12 m4">
+      <div class="col m5 s12">
         <div class="card card--rates">
+          <div class="card__header">
+            <span class="card-title">Today's rates*:<span class="right base-currency"></span></span>
+          </div>
+
           <div class="card-content">
-            <div>
-              <span class="">Today's rates*:<span class="right base-currency"></span></span>
-
-
-            </div>
-
-            <br>
 
             <ul class="collection collection--rates">
             </ul>
 
-            <a class="btn blue"
+          </div> <!-- end of .card-content -->
+          <div class="card-action">
+            <a class="btn indigo lighten-1 check-rates "
               href="https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html">
               Check Rates <span class="fas fa-chevron-right"></span></a>
 
             <div>
-              <small>*Last updated: <span class="update-time">20/06/19 18:48:30</span></small>
+              <small>*Last updated: <span class="update-time"></span></small>
             </div>
-
-          </div> <!-- end of .card-content -->
-          <!-- <div class="card-action">
-            
-          </div> -->
+          </div>
         </div> <!-- end of .card -->
       </div> <!-- end of .col -->
 
