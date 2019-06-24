@@ -1,6 +1,16 @@
 // body {
 //   background-image: url("./../../images/white-waves.png");
 // }
+// variables
+$bg-gradient: linear-gradient(-72deg, #0c345f, #305277);
+$bg-fallOff: #0c345f;
+
+.nav-wrapper {
+
+  background: $bg-fallOff;
+  background: $bg-gradient;
+}
+
 .dropdown {
   position: relative;
   display: inline-block;
@@ -21,7 +31,7 @@
     display: inline-block;
 
     &:focus {
-      background-color: #4caf50;
+      background-color: #9fa8da;
     }
   }
 }
@@ -36,19 +46,43 @@
   display: block;
 }
 
-/* Change the background color of the dropdown button when the dropdown content is shown */
-.dropdown:hover .dropbtn {
-  background-color: #3e8e41;
+
+/* === Daily rates list === */
+.card__header {
+  padding: 1.2em 1em;
+  background: $bg-fallOff;
+  background: $bg-gradient;
+  color: #ddd;
+}
+
+.card--rates .card-content {
+  padding-top: 14px;
+  padding-bottom: 0;
+}
+
+.btn.check-rates {
+  width: 100%;
 }
 
 /*  === Currency list additional styles === */
+.currency-list .collection-item {
 
-.collection-item:hover {
-  background-color: #eee;
+  background-color: #e8eaf665;
+
+  &:hover {
+    background-color: #9fa8da;
+  }
 }
 
+
+.add-btn {
+  background: #ff5959;
+}
+
+small,
 .small {
   font-size: 80%;
+  color: rgb(99, 99, 99);
 }
 
 
