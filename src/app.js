@@ -15,13 +15,6 @@ const App = (function(ItemCtrl, UICtrl, StorageCtrl){
   // Load event listeners
   const loadEventListeners = function(){
     
-    // initialize materialize.css dropdown select
-    document.addEventListener('DOMContentLoaded', function() {
-     
-      var elems = document.querySelectorAll('.dropdown-trigger');
-      var instances = M.Dropdown.init(elems);
-     
-    });
     
     // key up in currency input
     document.querySelector(UISelectors.itemCurrencyInput).addEventListener('keyup', UICtrl.showCurrencyList);
@@ -215,7 +208,7 @@ const App = (function(ItemCtrl, UICtrl, StorageCtrl){
     let targetedList;
     
     // Check what element targeted to traverse DOM accordingly 
-    if (e.target.matches('.small')){
+    if (e.target.matches('.small') || e.target.matches('.flag-icon')){
       targetedList = e.target.parentElement.parentElement;
             
       // set item currency

@@ -123,12 +123,10 @@ export const ItemCtrl =  (function(){
       // update items list with new conversion rate
       this.fetchCurrencyRates(currency)
         .then(() =>{
-          
-        //UICtrl.populateItemsList();
-        //UICtrl.updateTotalMoney();
+        
         this.setTodaysRatesList();
         UICtrl.updateUI();
-        //UICtrl.populateTodaysRates();
+       
       })
         .catch(err => console.log(err));
       
