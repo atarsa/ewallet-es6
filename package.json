@@ -13,7 +13,7 @@
     "type": "git",
     "url": "git+https://github.com/atarsa/ewallet-es6.git"
   },
-  "author": "",
+  "author": "ATarsa",
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.4.5",

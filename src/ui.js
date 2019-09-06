@@ -11,14 +11,12 @@ export const UICtrl= (function(){
     itemAmountInput: '#item-amount',
     // items list
     itemsList: '#items-list',
-    //listItems: '#items-list li',
     // rates list
     ratesList: '.collection--rates',
     ratesBaseCurrency: '.card--rates .base-currency',
     ratesLastUpdated: '.card--rates .update-time',
     // currency list
     currencyListItem: '.currency-list.item',
-    //currencyListBase: '.currency-list.base',
     currencyList: '.currency-list',
     convertedAmount: '.converted-amount',
     // wallet message 
@@ -32,7 +30,6 @@ export const UICtrl= (function(){
     updateBtn: '.update-btn',
     backBtn: '.back-btn',
     clearBtn: '.clear-btn'
-    
   }
   
   // Public methods
@@ -172,8 +169,6 @@ export const UICtrl= (function(){
       <span class="flag-icon flag-icon-${currenciesAvailable[baseCurrency][1]}"></span>
       ${baseCurrency} <span class="fas fa-chevron-down"></span>
       `;
-
-
     },
 
     // Show available currencies list

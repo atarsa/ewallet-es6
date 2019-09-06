@@ -16,14 +16,13 @@ const App = (function(ItemCtrl, UICtrl, StorageCtrl){
   const loadEventListeners = function(){
     
     
-    // key up in currency input
+    // Key up in currency input
     document.querySelector(UISelectors.itemCurrencyInput).addEventListener('keyup', UICtrl.showCurrencyList);
-    
-   
-    // click on currency list item
+      
+    // Click on currency list item
     document.querySelector(UISelectors.currencyList).addEventListener('click', getCurrencyInput);
     
-    // click on base currency dropdown list 
+    // Click on base currency dropdown list 
     document.querySelector(UISelectors.baseCurrencyList).addEventListener("click", pickBaseCurrency);
     
     // Add item submit event 
@@ -32,16 +31,16 @@ const App = (function(ItemCtrl, UICtrl, StorageCtrl){
     // Update item submit event
     document.querySelector(UISelectors.updateBtn).addEventListener('click', itemUpdateSubmit);
 
-    // delete item submit event
+    // Delete item submit event
     document.querySelector(UISelectors.itemsList).addEventListener('click', itemDeleteSubmit);
 
-    // edit item click event
+    // Edit item click event
     document.querySelector(UISelectors.itemsList).addEventListener('click', itemEditClick);
 
-    // back button click event
+    // Back button click event
     document.querySelector(UISelectors.backBtn).addEventListener('click', UICtrl.setDefaultState);
 
-    // clear all click event
+    // Clear all click event
     document.querySelector(UISelectors.clearBtn).addEventListener('click', clearAllClick);
   
   }

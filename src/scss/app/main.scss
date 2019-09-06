@@ -1,19 +1,14 @@
-// body {
-//   background-image: url("./../../images/white-waves.png");
-// }
 // variables
 $bg-gradient: linear-gradient(-72deg, #0c345f, #305277);
 $bg-fallOff: #0c345f;
 
 .nav-wrapper {
-
   background: $bg-fallOff;
   background: $bg-gradient;
 }
 
 .dropdown {
   position: relative;
-
 }
 
 .dropdown--content {
